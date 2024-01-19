@@ -1,3 +1,39 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-  package="io.devcrew.snapchatloginkit.snapchat_loginkit">
+    package="io.devcrew.snapchatloginkit">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application>
+        <meta-data
+            android:name="com.snap.kit.clientId"
+            android:value="${SNAP_CLIENT_ID}" />
+        <meta-data
+            android:name="com.snap.kit.redirectUrl"
+            android:value="${SNAP_REDIRECT_URL}" />
+        <meta-data
+            android:name="com.snap.kit.scopes"
+            android:resource="${SNAP_SCOPES_ARRAY}" />
+
+        <activity
+            android:name="com.snap.corekit.SnapKitActivity"
+            android:exported="true"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="${SNAP_REDIRECT_HOST}"
+                    android:path="${SNAP_REDIRECT_PATH}"
+                    android:scheme="${SNAP_REDIRECT_SCHEME}" />
+            </intent-filter>
+
+        </activity>
+
+    </application>
+    <queries>
+        <package android:name="com.snapchat.android" />
+    </queries>
 </manifest>

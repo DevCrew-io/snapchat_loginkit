@@ -49,9 +49,21 @@ android {
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
+
+        multiDexEnabled true
     }
 
     buildTypes {
+        debug {
+            manifestPlaceholders = [
+                    SNAP_CLIENT_ID      : localProperties.getProperty("com.snap.kit.clientId"),
+                    SNAP_REDIRECT_URL   : "your_actual_redirect_url",
+                    SNAP_SCOPES_ARRAY   : "@array/snap_connect_scopes",
+                    SNAP_REDIRECT_HOST  : "your_actual_redirect_host",
+                    SNAP_REDIRECT_PATH  : "your_actual_redirect_path",
+                    SNAP_REDIRECT_SCHEME: "your_actual_redirect_scheme"
+            ]
+        }
         release {
             // TODO: Add your own signing config for the release build.
             // Signing with the debug keys for now, so `flutter run --release` works.
@@ -64,4 +76,6 @@ flutter {
     source '../..'
 }
 
-dependencies {}
+dependencies {
+    implementation 'androidx.multidex:multidex:2.0.1'
+}
