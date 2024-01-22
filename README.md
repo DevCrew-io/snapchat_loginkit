@@ -109,8 +109,7 @@ Add the following fields in your application’s `Info.plist` file:
 ```
 Read [Snapchat iOS Documentation](https://docs.snap.com/snap-kit/login-kit/Tutorials/ios#get-started) for more information.
 #### Securing Your Client ID in Xcode
-Adding a build [Configuration](https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project) file to your project for storing your client id and confidential keys.
-Let's add `SNAP_CLIENT_ID`, `SNAP_REDIRECT_URL` and `SNAP_REDIRECT_SCHEME` properties in configuration file.
+Adding a [Build Configuration](https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project) file to your project for storing your client id and confidential keys. Let's add `SNAP_CLIENT_ID`, `SNAP_REDIRECT_URL` and `SNAP_REDIRECT_SCHEME` properties in configuration file.
 ```properties
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
@@ -121,4 +120,5 @@ SNAP_REDIRECT_URL = YOUR_REDIRECT_URL
 SNAP_REDIRECT_SCHEME = YOUR_REDIRECT_SCHEME
 ```
 - **OR** better way, setup different configurations file for different `productFlavors`
+
 **NOTE:** Now, whenever we push code to our repo, we can make sure that config file does not reach the server by adding it in .gitignore
