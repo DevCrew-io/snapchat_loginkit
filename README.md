@@ -78,7 +78,7 @@ android {
 
 ### iOS
 Add the following fields in your application’s `Info.plist` file:
-```properties
+```dart
 <key>SCSDKClientId</key>
 <string>$(SNAP_CLIENT_ID)</string>
 <key>SCSDKRedirectUrl</key>
