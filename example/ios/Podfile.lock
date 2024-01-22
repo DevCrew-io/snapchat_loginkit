@@ -1,0 +1,37 @@
+PODS:
+  - Flutter (1.0.0)
+  - integration_test (0.0.1):
+    - Flutter
+  - snapchat_loginkit (0.0.1):
+    - Flutter
+    - SnapSDK/SCSDKLoginKit (~> 2.5.0)
+  - SnapSDK/SCSDKCoreKit (2.5.0)
+  - SnapSDK/SCSDKLoginKit (2.5.0):
+    - SnapSDK/SCSDKCoreKit
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - integration_test (from `.symlinks/plugins/integration_test/ios`)
+  - snapchat_loginkit (from `.symlinks/plugins/snapchat_loginkit/ios`)
+
+SPEC REPOS:
+  trunk:
+    - SnapSDK
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  integration_test:
+    :path: ".symlinks/plugins/integration_test/ios"
+  snapchat_loginkit:
+    :path: ".symlinks/plugins/snapchat_loginkit/ios"
+
+SPEC CHECKSUMS:
+  Flutter: f04841e97a9d0b0a8025694d0796dd46242b2854
+  integration_test: 13825b8a9334a850581300559b8839134b124670
+  snapchat_loginkit: 1e744ae37cab11f20e7c22e71a6a1c0db23b8b33
+  SnapSDK: 7f9cff455207306ba63588026cbf7ed1a1a505c2
+
+PODFILE CHECKSUM: 70d9d25280d0dd177a5f637cdb0f0b0b12c6a189
+
+COCOAPODS: 1.14.3
