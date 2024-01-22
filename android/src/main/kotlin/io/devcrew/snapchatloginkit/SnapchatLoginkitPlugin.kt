@@ -1,4 +1,4 @@
-package io.devcrew.snapchatloginkit.snapchat_loginkit
+package io.devcrew.snapchatloginkit
 
 import androidx.annotation.NonNull
 

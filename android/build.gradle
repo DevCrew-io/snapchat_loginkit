@@ -1,8 +1,11 @@
-group 'io.devcrew.snapchatloginkit.snapchat_loginkit'
+group 'io.devcrew.snapchatloginkit'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.7.10'
+    ext {
+        kotlin_version = '1.7.10'
+        snapkit_version = '2.1.0'
+    }
     repositories {
         google()
         mavenCentral()
@@ -26,7 +29,7 @@ apply plugin: 'kotlin-android'
 
 android {
     if (project.android.hasProperty("namespace")) {
-        namespace 'io.devcrew.snapchatloginkit.snapchat_loginkit'
+        namespace 'io.devcrew.snapchatloginkit'
     }
 
     compileSdkVersion 33
@@ -52,6 +55,7 @@ android {
     dependencies {
         testImplementation 'org.jetbrains.kotlin:kotlin-test'
         testImplementation 'org.mockito:mockito-core:5.0.0'
+        implementation("com.snap.loginkit:loginkit:$snapkit_version")
     }
 
     testOptions {

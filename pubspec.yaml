@@ -37,7 +37,7 @@ flutter:
   plugin:
     platforms:
       android:
-        package: io.devcrew.snapchatloginkit.snapchat_loginkit
+        package: io.devcrew.snapchatloginkit
         pluginClass: SnapchatLoginkitPlugin
       ios:
         pluginClass: SnapchatLoginkitPlugin
