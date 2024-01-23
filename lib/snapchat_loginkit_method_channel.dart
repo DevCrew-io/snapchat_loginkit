@@ -14,4 +14,14 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
     final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
+
+  @override
+  void startTokenGrant() {
+    methodChannel.invokeMethod<String>('startTokenGrant');
+  }
+
+  @override
+  MethodChannel getMethodChannel() {
+    return methodChannel;
+  }
 }

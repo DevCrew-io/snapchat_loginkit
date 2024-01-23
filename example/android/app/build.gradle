@@ -57,11 +57,11 @@ android {
         debug {
             manifestPlaceholders = [
                     SNAP_CLIENT_ID      : localProperties.getProperty("com.snap.kit.clientId"),
-                    SNAP_REDIRECT_URL   : "your_actual_redirect_url",
+                    SNAP_REDIRECT_URL   : localProperties.getProperty("com.snap.kit.redirectUrl"),
                     SNAP_SCOPES_ARRAY   : "@array/snap_connect_scopes",
-                    SNAP_REDIRECT_HOST  : "your_actual_redirect_host",
-                    SNAP_REDIRECT_PATH  : "your_actual_redirect_path",
-                    SNAP_REDIRECT_SCHEME: "your_actual_redirect_scheme"
+                    SNAP_REDIRECT_HOST  : localProperties.getProperty("com.snap.kit.host"),
+                    SNAP_REDIRECT_PATH  : localProperties.getProperty("com.snap.kit.path"),
+                    SNAP_REDIRECT_SCHEME: localProperties.getProperty("com.snap.kit.scheme")
             ]
         }
         release {

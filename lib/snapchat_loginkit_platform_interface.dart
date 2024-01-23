@@ -1,3 +1,6 @@
+
+
+import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
 import 'snapchat_loginkit_method_channel.dart';
@@ -23,7 +26,15 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  MethodChannel getMethodChannel() {
+    throw UnimplementedError('getMethodChannel() has not been implemented.');
+  }
+
   Future<String?> getPlatformVersion() {
+    throw UnimplementedError('platformVersion() has not been implemented.');
+  }
+
+  void startTokenGrant() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 }
