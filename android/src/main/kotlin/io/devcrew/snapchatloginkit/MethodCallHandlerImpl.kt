@@ -22,6 +22,9 @@ class MethodCallHandlerImpl(
             Method.addLoginStateCallback -> {
                 addLoginStateCallback()
             }
+            Method.removeLoginStateCallback -> {
+                removeLoginStateCallback()
+            }
             Method.logout -> {
                 logout()
             }
@@ -36,40 +39,47 @@ class MethodCallHandlerImpl(
 
     private fun startTokenGrant() {
         snapLogin.startTokenGrant()
+        addLoginStateCallback()
     }
 
     private fun logout() {
         snapLogin.clearToken()
     }
 
+    private val loginStateCallback = object : LoginStateCallback {
+        override fun onStart() {
+            Log.d("SnapChatLoginKit", "onStart")
+            channel.invokeMethod(Method.Callback.onStart, null)
+        }
+
+        override fun onSuccess(token: String) {
+            Log.d("SnapChatLoginKit", "onSuccess")
+            channel.invokeMethod(Method.Callback.onSuccess, token)
+        }
+
+        override fun onFailure(e: LoginException) {
+            Log.d("SnapChatLoginKit", "onFailure")
+            channel.invokeMethod(Method.Callback.onFailure, e)
+        }
+
+        override fun onLogout() {
+            Log.d("SnapChatLoginKit", "onLogout")
+            channel.invokeMethod(Method.Callback.onLogout, null)
+        }
+    }
+
     private fun addLoginStateCallback() {
-        snapLogin.addLoginStateCallback(object : LoginStateCallback {
-            override fun onStart() {
-                Log.d("SnapChatLoginKit", "onStart")
-                channel.invokeMethod(Method.Callback.onStart, null)
-            }
+        snapLogin.addLoginStateCallback(loginStateCallback)
+    }
 
-            override fun onSuccess(token: String) {
-                Log.d("SnapChatLoginKit", "onSuccess")
-                channel.invokeMethod(Method.Callback.onSuccess, token)
-            }
-
-            override fun onFailure(e: LoginException) {
-                Log.d("SnapChatLoginKit", "onFailure")
-                channel.invokeMethod(Method.Callback.onFailure, e)
-            }
-
-            override fun onLogout() {
-                Log.d("SnapChatLoginKit", "onLogout")
-                channel.invokeMethod(Method.Callback.onLogout, null)
-            }
-
-        })
+    private fun removeLoginStateCallback() {
+        snapLogin.removeLoginStateCallback(loginStateCallback)
     }
 
     private object Method {
         const val startTokenGrant = "startTokenGrant"
         const val addLoginStateCallback = "addLoginStateCallback"
+        const val removeLoginStateCallback = "removeLoginStateCallback"
         const val logout = "logout"
 
         object Callback {
