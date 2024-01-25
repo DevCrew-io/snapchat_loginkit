@@ -21,6 +21,11 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
   }
 
   @override
+  void logout() {
+    methodChannel.invokeMethod<String>('logout');
+  }
+
+  @override
   MethodChannel getMethodChannel() {
     return methodChannel;
   }

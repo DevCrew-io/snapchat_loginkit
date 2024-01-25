@@ -1,4 +1,4 @@
-package io.devcrew.snapchatloginkit.snapchat_loginkit_example
+package io.devcrew.snapchatloginkit.example
 
 import io.flutter.embedding.android.FlutterActivity
 

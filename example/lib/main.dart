@@ -62,21 +62,16 @@ class _MyAppState extends State<MyApp> {
               Text('Snapchat Login: $_loginResult'),
               ElevatedButton(
                 onPressed: () {
-                  _snapchatLoginkitPlugin.startTokenGrant(
-                      onStart: () {
-                        setState(() {
-                          _loginResult = "Started";
-                        });
-                      },
-                      onSuccess: (token) {
-                        _loginResult = token;
-                      },
-                      onFailure: (e) {
-                        _loginResult = e.toString();
-                      }
-                  );
+                  _snapchatLoginkitPlugin.login();
                 },
-                child: const Text('Start Token Grant'),
+                child: const Text('Login with Snapchat'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  _snapchatLoginkitPlugin.logout();
+                },
+                child: const Text('Logout'),
               ),
             ],
           ),

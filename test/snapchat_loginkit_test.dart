@@ -22,6 +22,11 @@ class MockSnapchatLoginkitPlatform
   void startTokenGrant() {
     // TODO: implement startTokenGrant
   }
+
+  @override
+  void logout() {
+    // TODO: implement logout
+  }
 }
 
 void main() {

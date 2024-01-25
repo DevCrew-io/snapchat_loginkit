@@ -4,7 +4,7 @@ class LoginException implements Exception {
 
 }
 
-/// [startTokenGrant] method callbacks
+/// [login] method callbacks
 abstract class LoginResultCallback {
   void onStart();
   void onSuccess(String accessToken);

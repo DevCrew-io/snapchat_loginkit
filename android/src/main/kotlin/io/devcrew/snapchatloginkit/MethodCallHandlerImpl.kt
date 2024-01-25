@@ -1,5 +1,6 @@
 package io.devcrew.snapchatloginkit
 
+import android.util.Log
 import com.snap.loginkit.LoginResultCallback
 import com.snap.loginkit.LoginStateCallback
 import com.snap.loginkit.SnapLogin
@@ -19,7 +20,10 @@ class MethodCallHandlerImpl(
                 startTokenGrant()
             }
             Method.addLoginStateCallback -> {
-
+                addLoginStateCallback()
+            }
+            Method.logout -> {
+                logout()
             }
             "getPlatformVersion" -> {
                 result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -31,39 +35,33 @@ class MethodCallHandlerImpl(
     }
 
     private fun startTokenGrant() {
-        snapLogin.startTokenGrant(object : LoginResultCallback {
-            override fun onStart() {
-                channel.invokeMethod(Method.Callback.onStart, null)
-            }
+        snapLogin.startTokenGrant()
+    }
 
-            override fun onSuccess(token: String) {
-                channel.invokeMethod(Method.Callback.onSuccess, token)
-            }
-
-            override fun onFailure(e: LoginException) {
-                e.printStackTrace()
-                channel.invokeMethod(Method.Callback.onFailure, e)
-            }
-
-        })
+    private fun logout() {
+        snapLogin.clearToken()
     }
 
     private fun addLoginStateCallback() {
         snapLogin.addLoginStateCallback(object : LoginStateCallback {
             override fun onStart() {
-                TODO("Not yet implemented")
+                Log.d("SnapChatLoginKit", "onStart")
+                channel.invokeMethod(Method.Callback.onStart, null)
             }
 
-            override fun onSuccess(p0: String) {
-                TODO("Not yet implemented")
+            override fun onSuccess(token: String) {
+                Log.d("SnapChatLoginKit", "onSuccess")
+                channel.invokeMethod(Method.Callback.onSuccess, token)
             }
 
-            override fun onFailure(p0: LoginException) {
-                TODO("Not yet implemented")
+            override fun onFailure(e: LoginException) {
+                Log.d("SnapChatLoginKit", "onFailure")
+                channel.invokeMethod(Method.Callback.onFailure, e)
             }
 
             override fun onLogout() {
-                TODO("Not yet implemented")
+                Log.d("SnapChatLoginKit", "onLogout")
+                channel.invokeMethod(Method.Callback.onLogout, null)
             }
 
         })
@@ -72,6 +70,7 @@ class MethodCallHandlerImpl(
     private object Method {
         const val startTokenGrant = "startTokenGrant"
         const val addLoginStateCallback = "addLoginStateCallback"
+        const val logout = "logout"
 
         object Callback {
             const val onStart = "onStart"
