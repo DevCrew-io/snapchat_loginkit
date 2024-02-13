@@ -19,7 +19,7 @@ class MockSnapchatLoginkitPlatform
   }
 
   @override
-  void startTokenGrant() {
+  void login() {
     // TODO: implement startTokenGrant
   }
 

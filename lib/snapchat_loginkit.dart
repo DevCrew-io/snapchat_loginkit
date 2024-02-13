@@ -33,7 +33,7 @@ class SnapchatLoginkit {
   }
 
   void login() {
-    SnapchatLoginkitPlatform.instance.startTokenGrant();
+    SnapchatLoginkitPlatform.instance.login();
   }
 
   void logout() {

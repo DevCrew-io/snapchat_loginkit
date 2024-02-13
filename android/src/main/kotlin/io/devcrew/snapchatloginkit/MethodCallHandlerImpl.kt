@@ -1,7 +1,6 @@
 package io.devcrew.snapchatloginkit
 
 import android.util.Log
-import com.snap.loginkit.LoginResultCallback
 import com.snap.loginkit.LoginStateCallback
 import com.snap.loginkit.SnapLogin
 import com.snap.loginkit.exceptions.LoginException
@@ -17,7 +16,7 @@ class MethodCallHandlerImpl(
     override fun onMethodCall(call: MethodCall, result: Result) {
         when(call.method) {
             Method.startTokenGrant -> {
-                startTokenGrant()
+                login()
             }
             Method.addLoginStateCallback -> {
                 addLoginStateCallback()
@@ -37,7 +36,7 @@ class MethodCallHandlerImpl(
         }
     }
 
-    private fun startTokenGrant() {
+    private fun login() {
         snapLogin.startTokenGrant()
         addLoginStateCallback()
     }

@@ -34,7 +34,7 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
-  void startTokenGrant() {
+  void login() {
     throw UnimplementedError('platformVersion() has not been implemented.');
   }
 
