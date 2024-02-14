@@ -8,7 +8,6 @@ import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
 import io.flutter.plugin.common.MethodChannel.Result
-
 class MethodCallHandlerImpl(
     private val snapLogin: SnapLogin,
     private val channel: MethodChannel
@@ -42,11 +41,12 @@ class MethodCallHandlerImpl(
     }
 
     private fun login() {
-        snapLogin.startTokenGrant()
         addLoginStateCallback()
+        snapLogin.startTokenGrant()
     }
 
     private fun logout() {
+        addLoginStateCallback()
         snapLogin.clearToken()
     }
 
@@ -63,7 +63,7 @@ class MethodCallHandlerImpl(
 
         override fun onFailure(e: LoginException) {
             Log.d("SnapChatLoginKit", "onFailure")
-            channel.invokeMethod(Method.Callback.onFailure, e)
+            channel.invokeMethod(Method.Callback.onFailure, e.message ?: "Snapchat login failed")
         }
 
         override fun onLogout() {

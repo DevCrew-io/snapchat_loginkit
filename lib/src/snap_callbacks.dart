@@ -1,14 +1,8 @@
-
-/// exception to handle login failure result
-class LoginException implements Exception {
-
-}
-
 /// [login] method callbacks
 abstract class LoginResultCallback {
   void onStart();
   void onSuccess(String accessToken);
-  void onFailure(LoginException e);
+  void onFailure(String message);
 }
 
 /// subscribe to updates of login process
@@ -17,7 +11,7 @@ abstract class LoginStateCallback extends LoginResultCallback {
 }
 
 typedef OnSuccess = void Function(String accessToken);
-typedef OnFailure = void Function(LoginException exception);
+typedef OnFailure = void Function(String message);
 
 /// method channel calls received from native side
 class LoginCallbackMethod {

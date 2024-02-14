@@ -15,14 +15,15 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> implements LoginStateCallback {
   String _platformVersion = 'Unknown';
   String _loginResult = "";
-  final _snapchatLoginkitPlugin = SnapchatLoginkit();
+  late final SnapchatLoginkit _snapchatLoginkitPlugin;
 
   @override
   void initState() {
     super.initState();
+    _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
     initPlatformState();
   }
 
@@ -78,5 +79,25 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  @override
+  void onFailure(String message) {
+    debugPrint("Failure calling...");
+  }
+
+  @override
+  void onLogout() {
+    debugPrint("Logout calling...");
+  }
+
+  @override
+  void onStart() {
+    // TODO: implement onStart
+  }
+
+  @override
+  void onSuccess(String accessToken) {
+    debugPrint("Success calling...");
   }
 }
