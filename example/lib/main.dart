@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 
@@ -19,6 +18,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   String _platformVersion = 'Unknown';
   String _loginResult = "";
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
+
+  bool isUserLoggedIn = false;
 
   @override
   void initState() {
@@ -56,30 +57,50 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Running on: $_platformVersion\n'),
-              Text('Snapchat Login: $_loginResult'),
-              ElevatedButton(
-                onPressed: () {
-                  _snapchatLoginkitPlugin.login();
-                },
-                child: const Text('Login with Snapchat'),
-              ),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () {
-                  _snapchatLoginkitPlugin.logout();
-                },
-                child: const Text('Logout'),
-              ),
-            ],
-          ),
+          child: isUserLoggedIn
+              ? userprofileWidget()
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Running on: $_platformVersion\n'),
+                    Text('Snapchat Login: $_loginResult'),
+                    ElevatedButton(
+                      onPressed: () {
+                        _snapchatLoginkitPlugin.login();
+                      },
+                      child: const Text('Login with Snapchat'),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+                ),
         ),
       ),
     );
   }
+
+  Widget userprofileWidget() => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CircleAvatar(
+            radius: 50, // Image radius
+            backgroundImage: NetworkImage('https://placehold.co/600x400'),
+          ),
+          const SizedBox(height: 16),
+          const Text('Display Name'),
+          const SizedBox(height: 16),
+          const Text('External Id'),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              _snapchatLoginkitPlugin.logout();
+              setState(() {
+                isUserLoggedIn = false;
+              });
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      );
 
   @override
   void onFailure(String message) {
@@ -98,6 +119,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
 
   @override
   void onSuccess(String accessToken) {
-    debugPrint("Success calling...");
+    setState(() {
+      isUserLoggedIn = true;
+    });
   }
 }
