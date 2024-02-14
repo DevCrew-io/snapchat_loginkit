@@ -40,5 +40,9 @@ class SnapchatLoginkit {
   void logout() {
     SnapchatLoginkitPlatform.instance.logout();
   }
+
+  Future<bool> isUserLoggedIn() {
+    return SnapchatLoginkitPlatform.instance.isUserLoggedIn();
+  }
 }
 

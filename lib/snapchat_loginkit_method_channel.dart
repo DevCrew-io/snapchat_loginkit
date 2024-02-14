@@ -26,6 +26,12 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
   }
 
   @override
+  Future<bool> isUserLoggedIn() async {
+    final isUserLoggedIn = await methodChannel.invokeMethod<bool>('isUserLoggedIn');
+    return isUserLoggedIn ?? false;
+  }
+
+  @override
   MethodChannel getMethodChannel() {
     return methodChannel;
   }

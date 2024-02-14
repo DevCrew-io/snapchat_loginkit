@@ -122,3 +122,20 @@ SNAP_REDIRECT_SCHEME = YOUR_REDIRECT_SCHEME
 - **OR** better way, setup different configurations file for different `productFlavors`
 
 **NOTE:** Now, whenever we push code to our repo, we can make sure that config file does not reach the server by adding it in .gitignore
+
+#### Handle Deeplink
+In `AppDelegate`, use the `SCSDKLoginClient` interface to receive the deeplink:
+```swift
+import SCSDKLoginKit
+
+func application(
+  _ app: UIApplication,
+  open url: URL,
+  options: [UIApplicationOpenURLOptionsKey : Any] = [:]) -> Bool {
+  ...
+    if SCSDKLoginClient.application(app, open: url, options: options) {
+      return true
+    }
+  ...
+}
+```
