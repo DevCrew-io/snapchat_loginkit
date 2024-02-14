@@ -54,7 +54,7 @@ class MethodCallHandlerImpl(
         snapLogin.clearToken()
     }
 
-    private fun isUserLoggedIn(_ result: Result) {
+    private fun isUserLoggedIn(result: Result) {
         result.success(snapLogin.isUserLoggedIn())
     }
 
