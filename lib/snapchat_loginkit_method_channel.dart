@@ -14,4 +14,19 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
     final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
     return version;
   }
+
+  @override
+  void login() {
+    methodChannel.invokeMethod<String>('login');
+  }
+
+  @override
+  void logout() {
+    methodChannel.invokeMethod<String>('logout');
+  }
+
+  @override
+  MethodChannel getMethodChannel() {
+    return methodChannel;
+  }
 }

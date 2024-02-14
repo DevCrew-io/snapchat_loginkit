@@ -23,7 +23,7 @@ if (flutterVersionName == null) {
 }
 
 android {
-    namespace "io.devcrew.snapchatloginkit.snapchat_loginkit_example"
+    namespace "io.devcrew.snapchatloginkit.example"
     compileSdkVersion flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
@@ -41,8 +41,7 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-        applicationId "io.devcrew.snapchatloginkit.snapchat_loginkit_example"
+        applicationId "io.devcrew.snapchatloginkit.example"
         // You can update the following values to match your application needs.
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-gradle-build-configuration.
         minSdkVersion flutter.minSdkVersion
@@ -57,11 +56,11 @@ android {
         debug {
             manifestPlaceholders = [
                     SNAP_CLIENT_ID      : localProperties.getProperty("com.snap.kit.clientId"),
-                    SNAP_REDIRECT_URL   : "your_actual_redirect_url",
+                    SNAP_REDIRECT_URL   : localProperties.getProperty("com.snap.kit.redirectUrl"),
                     SNAP_SCOPES_ARRAY   : "@array/snap_connect_scopes",
-                    SNAP_REDIRECT_HOST  : "your_actual_redirect_host",
-                    SNAP_REDIRECT_PATH  : "your_actual_redirect_path",
-                    SNAP_REDIRECT_SCHEME: "your_actual_redirect_scheme"
+                    SNAP_REDIRECT_HOST  : localProperties.getProperty("com.snap.kit.host"),
+                    SNAP_REDIRECT_PATH  : localProperties.getProperty("com.snap.kit.path"),
+                    SNAP_REDIRECT_SCHEME: localProperties.getProperty("com.snap.kit.scheme")
             ]
         }
         release {

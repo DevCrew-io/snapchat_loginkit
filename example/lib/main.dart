@@ -17,6 +17,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   String _platformVersion = 'Unknown';
+  String _loginResult = "";
   final _snapchatLoginkitPlugin = SnapchatLoginkit();
 
   @override
@@ -31,8 +32,7 @@ class _MyAppState extends State<MyApp> {
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
     try {
-      platformVersion =
-          await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -55,7 +55,26 @@ class _MyAppState extends State<MyApp> {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Text('Running on: $_platformVersion\n'),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Running on: $_platformVersion\n'),
+              Text('Snapchat Login: $_loginResult'),
+              ElevatedButton(
+                onPressed: () {
+                  _snapchatLoginkitPlugin.login();
+                },
+                child: const Text('Login with Snapchat'),
+              ),
+              const SizedBox(height: 12),
+              ElevatedButton(
+                onPressed: () {
+                  _snapchatLoginkitPlugin.logout();
+                },
+                child: const Text('Logout'),
+              ),
+            ],
+          ),
         ),
       ),
     );

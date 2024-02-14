@@ -1,3 +1,4 @@
+import 'package:flutter/src/services/platform_channel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit_platform_interface.dart';
@@ -10,6 +11,22 @@ class MockSnapchatLoginkitPlatform
 
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
+
+  @override
+  MethodChannel getMethodChannel() {
+    // TODO: implement getMethodChannel
+    throw UnimplementedError();
+  }
+
+  @override
+  void login() {
+    // TODO: implement startTokenGrant
+  }
+
+  @override
+  void logout() {
+    // TODO: implement logout
+  }
 }
 
 void main() {
