@@ -1,5 +1,7 @@
 
 
+import 'dart:ffi';
+
 import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
@@ -35,7 +37,11 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
   }
 
   void login() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
+    throw UnimplementedError('login() has not been implemented.');
+  }
+
+  Future<bool> isUserLoggedIn() async {
+    throw UnimplementedError('isUserLoggedIn() has not been implemented.');
   }
 
   void logout() {
