@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/src/services/platform_channel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
@@ -27,6 +29,12 @@ class MockSnapchatLoginkitPlatform
   void logout() {
     // TODO: implement logout
   }
+
+  @override
+  Future<bool> isUserLoggedIn() {
+    return Future.value(false);
+  }
+
 }
 
 void main() {

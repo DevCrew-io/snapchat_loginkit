@@ -34,6 +34,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     // We also handle the message potentially returning null.
     try {
       platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
+      bool isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
+      debugPrint("isUserLoggedIn calling... $isUserLoggedIn");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }

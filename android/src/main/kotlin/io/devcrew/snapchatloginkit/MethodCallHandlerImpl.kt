@@ -30,6 +30,10 @@ class MethodCallHandlerImpl(
                 logout()
             }
 
+            Method.isUserLoggedIn -> {
+                isUserLoggedIn(result)
+            }
+
             "getPlatformVersion" -> {
                 result.success("Android ${android.os.Build.VERSION.RELEASE}")
             }
@@ -48,6 +52,10 @@ class MethodCallHandlerImpl(
     private fun logout() {
         addLoginStateCallback()
         snapLogin.clearToken()
+    }
+
+    private fun isUserLoggedIn(_ result: Result) {
+        result.success(snapLogin.isUserLoggedIn())
     }
 
     private val loginStateCallback = object : LoginStateCallback {
@@ -85,6 +93,7 @@ class MethodCallHandlerImpl(
         const val addLoginStateCallback = "addLoginStateCallback"
         const val removeLoginStateCallback = "removeLoginStateCallback"
         const val logout = "logout"
+        const val isUserLoggedIn = "isUserLoggedIn"
 
         object Callback {
             const val onStart = "onStart"
