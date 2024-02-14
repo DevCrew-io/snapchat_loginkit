@@ -14,22 +14,27 @@ class MethodCallHandlerImpl(
     private val channel: MethodChannel
 ) : MethodCallHandler {
     override fun onMethodCall(call: MethodCall, result: Result) {
-        when(call.method) {
-            Method.startTokenGrant -> {
+        when (call.method) {
+            Method.login -> {
                 login()
             }
+
             Method.addLoginStateCallback -> {
                 addLoginStateCallback()
             }
+
             Method.removeLoginStateCallback -> {
                 removeLoginStateCallback()
             }
+
             Method.logout -> {
                 logout()
             }
+
             "getPlatformVersion" -> {
                 result.success("Android ${android.os.Build.VERSION.RELEASE}")
             }
+
             else -> {
                 result.notImplemented()
             }
@@ -76,7 +81,7 @@ class MethodCallHandlerImpl(
     }
 
     private object Method {
-        const val startTokenGrant = "startTokenGrant"
+        const val login = "login"
         const val addLoginStateCallback = "addLoginStateCallback"
         const val removeLoginStateCallback = "removeLoginStateCallback"
         const val logout = "logout"

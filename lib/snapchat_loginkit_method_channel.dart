@@ -17,7 +17,7 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
 
   @override
   void login() {
-    methodChannel.invokeMethod<String>('startTokenGrant');
+    methodChannel.invokeMethod<String>('login');
   }
 
   @override
