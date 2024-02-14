@@ -1,6 +1,7 @@
 
 import 'snapchat_loginkit_platform_interface.dart';
 import 'src/snap_callbacks.dart';
+export 'src/snap_callbacks.dart';
 
 class SnapchatLoginkit {
 
