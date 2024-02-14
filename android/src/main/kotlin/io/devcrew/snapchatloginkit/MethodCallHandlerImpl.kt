@@ -50,7 +50,6 @@ class MethodCallHandlerImpl(
     }
 
     private fun logout() {
-        addLoginStateCallback()
         snapLogin.clearToken()
     }
 

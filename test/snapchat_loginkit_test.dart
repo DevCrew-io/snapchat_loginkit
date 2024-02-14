@@ -26,13 +26,23 @@ class MockSnapchatLoginkitPlatform
   }
 
   @override
-  void logout() {
-    // TODO: implement logout
+  Future<bool> isUserLoggedIn() {
+    return Future.value(false);
   }
 
   @override
-  Future<bool> isUserLoggedIn() {
-    return Future.value(false);
+  void addLoginStateCallback() {
+    // TODO: implement addLoginStateCallback
+  }
+
+  @override
+  void removeLoginStateCallback() {
+    // TODO: implement addLoginStateCallback
+  }
+
+  @override
+  void logout() {
+    // TODO: implement logout
   }
 
 }

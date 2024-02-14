@@ -32,6 +32,16 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
   }
 
   @override
+  void addLoginStateCallback() {
+    methodChannel.invokeMethod<String>('addLoginStateCallback');
+  }
+
+  @override
+  void removeLoginStateCallback() {
+    methodChannel.invokeMethod<String>('removeLoginStateCallback');
+  }
+
+  @override
   MethodChannel getMethodChannel() {
     return methodChannel;
   }
