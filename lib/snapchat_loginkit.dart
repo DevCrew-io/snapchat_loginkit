@@ -37,6 +37,14 @@ class SnapchatLoginkit {
     SnapchatLoginkitPlatform.instance.login();
   }
 
+  void addLoginStateCallback() {
+    SnapchatLoginkitPlatform.instance.addLoginStateCallback();
+  }
+
+  void removeLoginStateCallback() {
+    SnapchatLoginkitPlatform.instance.removeLoginStateCallback();
+  }
+
   void logout() {
     SnapchatLoginkitPlatform.instance.logout();
   }

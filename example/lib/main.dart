@@ -25,6 +25,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   void initState() {
     super.initState();
     _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
+    _snapchatLoginkitPlugin.addLoginStateCallback();
     checkUserIsLoggedIn();
     initPlatformState();
   }
