@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:snapchat_loginkit/snapchat_loginkit.dart';
+import 'package:snapchat_loginkit/src/user_data.dart';
 
 import 'snapchat_loginkit_platform_interface.dart';
 
@@ -34,5 +36,13 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
   @override
   MethodChannel getMethodChannel() {
     return methodChannel;
+  }
+
+  @override
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) async {
+    debugPrint("fetchUserData lib , ${query.isWithDisplayName}");
+    final userData = await methodChannel.invokeMethod('fetchUserData', query.toMap());
+    UserDataResponse userDataResponse = UserDataResponse.fromMap(userData);
+    return userDataResponse;
   }
 }

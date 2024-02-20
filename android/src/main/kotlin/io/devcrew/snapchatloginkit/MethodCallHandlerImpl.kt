@@ -3,11 +3,15 @@ package io.devcrew.snapchatloginkit
 import android.util.Log
 import com.snap.loginkit.LoginStateCallback
 import com.snap.loginkit.SnapLogin
+import com.snap.loginkit.UserDataResultCallback
 import com.snap.loginkit.exceptions.LoginException
+import com.snap.loginkit.exceptions.UserDataException
+import com.snap.loginkit.models.UserDataResult
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
-import io.flutter.plugin.common.MethodChannel.Result
+
+
 class MethodCallHandlerImpl(
     private val snapLogin: SnapLogin,
     private val channel: MethodChannel
@@ -34,6 +38,10 @@ class MethodCallHandlerImpl(
                 isUserLoggedIn(result)
             }
 
+            Method.fetchUserData -> {
+                fetchUserData(call.arguments as? Map<String, Any>, result)
+            }
+
             "getPlatformVersion" -> {
                 result.success("Android ${android.os.Build.VERSION.RELEASE}")
             }
@@ -56,6 +64,41 @@ class MethodCallHandlerImpl(
 
     private fun isUserLoggedIn(result: Result) {
         result.success(snapLogin.isUserLoggedIn())
+    }
+
+    private fun fetchUserData(arguments: Map<String, Any>?, result: Result) {
+        val query = arguments?.let { UserFetchDataQuery(it) }
+        val userData = UserData()
+        val userDataResponse = UserDataResponse()
+        query?.let {
+            val userDataQuery = it.fetchUserData()
+            snapLogin.fetchUserData(userDataQuery, object : UserDataResultCallback {
+                override fun onSuccess(userDataResult: UserDataResult) {
+                    if (userDataResult.data == null) {
+                        return
+                    }
+                    if (userDataResult.data!!.meData != null) {
+                        val data = userDataResult.data!!.meData!!
+                        userData.displayName = data.displayName
+                        userData.bitmoji = data.bitmojiData?.twoDAvatarUrl
+                        userData.externalId = data.externalId
+                        userData.tokenId = data.idToken
+                        userDataResponse.code = 200
+                        userDataResponse.message = "Success"
+                        userDataResponse.userDataMap = userData.toMap()
+                    }
+
+                    println("User Data: $userDataResponse")
+                }
+
+                override fun onFailure(exception: UserDataException) {
+                    userDataResponse.code = 400
+                    userDataResponse.message = "Failure"
+                    userDataResponse.userDataMap = mapOf()
+                }
+            })
+        }
+        result.success(userDataResponse.toMap())
     }
 
     private val loginStateCallback = object : LoginStateCallback {
@@ -94,6 +137,7 @@ class MethodCallHandlerImpl(
         const val removeLoginStateCallback = "removeLoginStateCallback"
         const val logout = "logout"
         const val isUserLoggedIn = "isUserLoggedIn"
+        const val fetchUserData = "fetchUserData"
 
         object Callback {
             const val onStart = "onStart"
@@ -103,3 +147,4 @@ class MethodCallHandlerImpl(
         }
     }
 }
+

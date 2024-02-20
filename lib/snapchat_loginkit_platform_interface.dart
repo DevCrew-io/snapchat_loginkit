@@ -1,9 +1,9 @@
-
-
 import 'dart:ffi';
 
 import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:snapchat_loginkit/src/user_data.dart';
+import 'package:snapchat_loginkit/src/user_data_query_builder.dart';
 
 import 'snapchat_loginkit_method_channel.dart';
 
@@ -46,5 +46,9 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
 
   void logout() {
     throw UnimplementedError('logout() has not been implemented.');
+  }
+
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) {
+    throw UnimplementedError('fetchUserData() has not been implemented.');
   }
 }

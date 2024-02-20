@@ -40,6 +40,11 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     // We also handle the message potentially returning null.
     try {
       platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
+
+      UserDataQuery query =
+          UserDataQueryBuilder().withDisplayName().withBitmojiAvatarUrl().withExternalId().build();
+      final UserDataResponse userDataResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
+      print("Response: ${userDataResponse}");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
