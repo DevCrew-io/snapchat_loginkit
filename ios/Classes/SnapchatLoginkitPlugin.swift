@@ -61,7 +61,6 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
     }
     
     private func logout() {
-        addLoginStateCallback()
         SCSDKLoginClient.clearToken()
     }
     
