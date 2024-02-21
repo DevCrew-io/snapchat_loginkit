@@ -10,6 +10,7 @@ import com.snap.loginkit.models.UserDataResult
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
+import io.flutter.plugin.common.MethodChannel.Result
 
 
 class MethodCallHandlerImpl(
@@ -86,18 +87,17 @@ class MethodCallHandlerImpl(
                         userDataResponse.message = "Success"
                         userDataResponse.userDataMap = userData.toMap()
                     }
-
-                    println("User Data: $userDataResponse")
+                    result.success(userDataResponse.toMap())
                 }
 
                 override fun onFailure(exception: UserDataException) {
-                    userDataResponse.code = 400
-                    userDataResponse.message = "Failure"
+                    userDataResponse.code = exception.statusCode
+                    userDataResponse.message = exception.message.toString()
                     userDataResponse.userDataMap = mapOf()
+                    result.success(userDataResponse.toMap())
                 }
             })
         }
-        result.success(userDataResponse.toMap())
     }
 
     private val loginStateCallback = object : LoginStateCallback {

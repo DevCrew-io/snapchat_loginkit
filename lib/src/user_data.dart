@@ -6,28 +6,25 @@ class UserData {
 
   UserData({this.displayName, this.bitmoji, this.externalId, this.tokenId});
 
-  factory UserData.fromMap(Map<String, dynamic> map) {
-    return UserData(
-      displayName: map['displayName'],
-      bitmoji: map['bitmoji'],
-      externalId: map['externalId'],
-      tokenId: map['tokenId'],
-    );
-  }
+  factory UserData.fromMap(Map<Object?, Object?> map) => UserData(
+      displayName: map['displayName'] != null ? map['displayName'] as String : null,
+      bitmoji: map["bitmoji"] != null ? map["bitmoji"] as String : null,
+      externalId: map['externalId'] != null ? map['externalId'] as String : null,
+      tokenId: map['tokenId'] != null ? map['tokenId'] as String : null);
 }
 
 class UserDataResponse {
-  final int code;
-  final String message;
-  final UserData? userData;
+  int code;
+  String message;
+  UserData? userData;
 
   UserDataResponse({this.code = 0, this.message = "", this.userData});
 
-  factory UserDataResponse.fromMap(Map<String, dynamic> map) {
-    return UserDataResponse(
-      code: map['code'] ?? 0,
-      message: map['message'] ?? "",
-      userData: map['jsonStringData'] != null ? UserData.fromMap(map['jsonStringData']) : null,
-    );
-  }
+  factory UserDataResponse.fromMap(Map<Object?, Object?> map) => UserDataResponse(
+        code: map['code'] as int? ?? 0,
+        message: map['message'] as String? ?? "",
+        userData: map['jsonStringData'] != null
+            ? UserData.fromMap(map['jsonStringData'] as Map<Object?, Object?>)
+            : null,
+      );
 }
