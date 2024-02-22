@@ -20,7 +20,7 @@ data class UserFetchDataQuery(
         isWithBitmojiAvatarUrl = map["isWithBitmojiAvatarUrl"] as? Boolean ?: false
     )
 
-    fun fetchUserData(): UserDataQuery {
+    fun prepareUserDataQuery(): UserDataQuery {
         val builder = UserDataQuery.newBuilder()
         val bitmojiQueryBuilder: BitmojiQuery.Builder = BitmojiQuery.newBuilder()
         val bitmojiQuery: BitmojiQuery
@@ -48,29 +48,15 @@ data class UserFetchDataQuery(
     }
 }
 
-data class UserData(
-    var displayName: String? = null,
-    var bitmoji: String? = null,
-    var externalId: String? = null,
-    var tokenId: String? = null
-) {
-    fun toMap(): Map<String, String?> = mapOf(
-        "displayName" to displayName,
-        "bitmoji" to bitmoji,
-        "externalId" to externalId,
-        "tokenId" to tokenId
-    )
-}
-
 data class UserDataResponse(
     var code: Int = 0,
     var message: String = "",
-    var userDataMap: Map<String, String?> = mapOf()
+    var data: Map<String, String?> = mapOf()
 ) {
     fun toMap(): Map<String, Any> = mapOf(
         "code" to code,
         "message" to message,
-        "jsonStringData" to userDataMap
+        "data" to data
     )
 }
 

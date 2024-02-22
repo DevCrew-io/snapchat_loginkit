@@ -57,7 +57,6 @@ class SnapchatLoginkit {
   }
 
   Future<UserDataResponse> fetchUserData(UserDataQuery query) async {
-    final userData = SnapchatLoginkitPlatform.instance.fetchUserData(query);
-    return userData;
+    return await SnapchatLoginkitPlatform.instance.fetchUserData(query);
   }
 }

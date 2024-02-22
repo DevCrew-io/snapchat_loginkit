@@ -94,12 +94,12 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
         children: [
           CircleAvatar(
             radius: 50, // Image radius
-            backgroundImage: NetworkImage('${userDataResponse.userData?.bitmoji}'),
+            backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
           ),
           const SizedBox(height: 16),
-          Text('${userDataResponse.userData?.displayName}'),
+          Text('${userDataResponse.data?.displayName}'),
           const SizedBox(height: 16),
-          Text('${userDataResponse.userData?.externalId}'),
+          Text('${userDataResponse.data?.externalId}'),
           const SizedBox(height: 16),
           ElevatedButton(
             onPressed: () {

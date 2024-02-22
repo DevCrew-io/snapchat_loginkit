@@ -68,10 +68,9 @@ class MethodCallHandlerImpl(
 
     private fun fetchUserData(arguments: Map<String, Any>?, result: Result) {
         val query = arguments?.let { UserFetchDataQuery(it) }
-        val userData = UserData()
         val userDataResponse = UserDataResponse()
         query?.let {
-            val userDataQuery = it.fetchUserData()
+            val userDataQuery = it.prepareUserDataQuery()
             snapLogin.fetchUserData(userDataQuery, object : UserDataResultCallback {
                 override fun onSuccess(userDataResult: UserDataResult) {
                     if (userDataResult.data == null) {
@@ -79,13 +78,16 @@ class MethodCallHandlerImpl(
                     }
                     if (userDataResult.data!!.meData != null) {
                         val data = userDataResult.data!!.meData!!
-                        userData.displayName = data.displayName
-                        userData.bitmoji = data.bitmojiData?.twoDAvatarUrl
-                        userData.externalId = data.externalId
-                        userData.tokenId = data.idToken
                         userDataResponse.code = 200
                         userDataResponse.message = "Success"
-                        userDataResponse.userDataMap = userData.toMap()
+                        userDataResponse.data = mapOf(
+                            "displayName" to data.displayName,
+                            "avatarId" to data.bitmojiData?.avatarId,
+                            "avatarUrl" to data.bitmojiData?.twoDAvatarUrl,
+                            "externalId" to data.externalId,
+                            "tokenId" to data.idToken,
+                            "profileLink" to ""
+                        )
                     }
                     result.success(userDataResponse.toMap())
                 }
@@ -93,7 +95,7 @@ class MethodCallHandlerImpl(
                 override fun onFailure(exception: UserDataException) {
                     userDataResponse.code = exception.statusCode
                     userDataResponse.message = exception.message.toString()
-                    userDataResponse.userDataMap = mapOf()
+                    userDataResponse.data = mapOf()
                     result.success(userDataResponse.toMap())
                 }
             })

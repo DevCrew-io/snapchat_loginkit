@@ -50,8 +50,6 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
 
   @override
   Future<UserDataResponse> fetchUserData(UserDataQuery query) async {
-    final Map<Object?, Object?> userData = await methodChannel.invokeMethod('fetchUserData', query.toMap());
-    UserDataResponse userDataResponse = UserDataResponse.fromMap(userData);
-    return userDataResponse;
+    return UserDataResponse.fromMap(await methodChannel.invokeMethod('fetchUserData', query.toMap()));
   }
 }
