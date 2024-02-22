@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
-
 import 'package:flutter/services.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 
@@ -19,13 +18,25 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   String _platformVersion = 'Unknown';
   String _loginResult = "";
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
+  UserDataResponse userDataResponse = UserDataResponse();
+
+  bool isUserLoggedIn = false;
 
   @override
   void initState() {
     super.initState();
     _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
     _snapchatLoginkitPlugin.addLoginStateCallback();
+    checkUserIsLoggedIn();
     initPlatformState();
+  }
+
+  checkUserIsLoggedIn() async {
+    isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
+    if (isUserLoggedIn) {
+      await fetchUserData();
+      setState(() {});
+    }
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -35,8 +46,6 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     // We also handle the message potentially returning null.
     try {
       platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
-      bool isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
-      debugPrint("isUserLoggedIn calling... $isUserLoggedIn");
     } on PlatformException {
       platformVersion = 'Failed to get platform version.';
     }
@@ -59,30 +68,50 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
           title: const Text('Plugin example app'),
         ),
         body: Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Running on: $_platformVersion\n'),
-              Text('Snapchat Login: $_loginResult'),
-              ElevatedButton(
-                onPressed: () {
-                  _snapchatLoginkitPlugin.login();
-                },
-                child: const Text('Login with Snapchat'),
-              ),
-              const SizedBox(height: 12),
-              ElevatedButton(
-                onPressed: () {
-                  _snapchatLoginkitPlugin.logout();
-                },
-                child: const Text('Logout'),
-              ),
-            ],
-          ),
+          child: isUserLoggedIn
+              ? userprofileWidget()
+              : Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text('Running on: $_platformVersion\n'),
+                    Text('Snapchat Login: $_loginResult'),
+                    ElevatedButton(
+                      onPressed: () {
+                        _snapchatLoginkitPlugin.login();
+                      },
+                      child: const Text('Login with Snapchat'),
+                    ),
+                    const SizedBox(height: 12),
+                  ],
+                ),
         ),
       ),
     );
   }
+
+  Widget userprofileWidget() => Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CircleAvatar(
+            radius: 50, // Image radius
+            backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
+          ),
+          const SizedBox(height: 16),
+          Text('${userDataResponse.data?.displayName}'),
+          const SizedBox(height: 16),
+          Text('${userDataResponse.data?.externalId}'),
+          const SizedBox(height: 16),
+          ElevatedButton(
+            onPressed: () {
+              _snapchatLoginkitPlugin.logout();
+              setState(() {
+                isUserLoggedIn = false;
+              });
+            },
+            child: const Text('Logout'),
+          ),
+        ],
+      );
 
   @override
   void onFailure(String message) {
@@ -99,8 +128,17 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     // TODO: implement onStart
   }
 
+  fetchUserData() async {
+    UserDataQuery query =
+        UserDataQueryBuilder().withDisplayName().withBitmojiAvatarUrl().withExternalId().build();
+    userDataResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
+  }
+
   @override
-  void onSuccess(String accessToken) {
-    debugPrint("Success calling...");
+  void onSuccess(String accessToken) async {
+    await fetchUserData();
+    setState(() {
+      isUserLoggedIn = true;
+    });
   }
 }
