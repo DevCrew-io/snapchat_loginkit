@@ -14,6 +14,8 @@ enum Method {
     static let logout = "logout"
     static let isUserLoggedIn = "isUserLoggedIn"
     static let fetchUserData = "fetchUserData"
+    static let fetchAccessToken = "fetchAccessToken"
+    static let hasAccessToScope = "hasAccessToScope"
 
     enum Callback {
         static let onStart = "onStart"
