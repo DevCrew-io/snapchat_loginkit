@@ -45,6 +45,12 @@ class MockSnapchatLoginkitPlatform
     // TODO: implement logout
   }
 
+  @override
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) {
+    // TODO: implement fetchUserData
+    throw UserDataResponse(code: 0, message: "");
+  }
+
 }
 
 void main() {

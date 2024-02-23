@@ -6,14 +6,18 @@ let channelName = "snapchat_loginkit"
 
 public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
     
+    // MARK: - Properties -
+    
+    private let loginStateCallback = LoginStateCallback()
+    
+    
+    // MARK: - Register Channel & Handle Incoming Methods -
+    
     public static func register(with registrar: FlutterPluginRegistrar) {
         let channel = FlutterMethodChannel(name: channelName, binaryMessenger: registrar.messenger())
         let instance = SnapchatLoginkitPlugin()
         registrar.addMethodCallDelegate(instance, channel: channel)
     }
-    
-    
-    private let loginStateCallback = LoginStateCallback()
     
     public func handle(_ call: FlutterMethodCall, result: @escaping FlutterResult) {
         switch call.method {
@@ -33,6 +37,9 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
         case Method.isUserLoggedIn:
             isUserLoggedIn(result)
             
+        case Method.fetchUserData:
+            fetchUserData(call.arguments as? [String : Any], result)
+            
         case "getPlatformVersion":
             result("iOS " + UIDevice.current.systemVersion)
             
@@ -41,6 +48,9 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
             
         }
     }
+    
+    
+    // MARK: - Functions  -
     
     private func login() {
         addLoginStateCallback()
@@ -66,5 +76,39 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
     
     private func isUserLoggedIn(_ result: FlutterResult) {
         result(SCSDKLoginClient.isUserLoggedIn)
+    }
+    
+    private func fetchUserData(_ arguments: [String : Any]?, _ result: @escaping FlutterResult) {
+        let userDataResponse = UserDataResponse()
+        
+        guard let arguments = arguments else {
+            userDataResponse.code = 421
+            userDataResponse.message = "Invalid or Null Arguments"
+            result(userDataResponse.toMap())
+            return
+        }
+        
+        let query = UserFetchDataQuery(fromMap: arguments)
+        SCSDKLoginClient.fetchUserData(with: query.prepareUserDataQuery()) { data, _ in
+            
+            userDataResponse.data = [
+                "displayName" : data?.displayName,
+                "avatarId" : data?.bitmojiAvatarID,
+                "avatarUrl" : data?.bitmojiTwoDAvatarUrl,
+                "externalId" : data?.externalID,
+                "tokenId" : data?.idToken,
+                "profileLink" : data?.profileLink
+            ]
+            
+            result(userDataResponse.toMap())
+            
+        } failure: { error, _ in
+            
+            userDataResponse.code = (error as? NSError)?.code ?? 400
+            userDataResponse.message = error?.localizedDescription ?? "Unkown Error"
+            result(userDataResponse.toMap())
+            
+        }
+
     }
 }

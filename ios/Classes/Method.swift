@@ -13,6 +13,7 @@ enum Method {
     static let removeLoginStateCallback = "removeLoginStateCallback"
     static let logout = "logout"
     static let isUserLoggedIn = "isUserLoggedIn"
+    static let fetchUserData = "fetchUserData"
 
     enum Callback {
         static let onStart = "onStart"
