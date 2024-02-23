@@ -52,7 +52,7 @@ class MockSnapchatLoginkitPlatform
   }
 
   @override
-  Future<String> fetchAccessToken() {
+  Future<String?> fetchAccessToken() {
     // TODO: implement fetchAccessToken
     throw UnimplementedError();
   }

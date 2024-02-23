@@ -29,6 +29,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     _snapchatLoginkitPlugin.addLoginStateCallback();
     checkUserIsLoggedIn();
     initPlatformState();
+    hasAccessToScope();
+    fetchAccessToken();
   }
 
   checkUserIsLoggedIn() async {
@@ -39,16 +41,22 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     }
   }
 
+  fetchAccessToken() async {
+    final String? resp = await _snapchatLoginkitPlugin.fetchAccessToken();
+    print("Token: $resp");
+  }
+
+  hasAccessToScope() async {
+    final bool hasAccess = await _snapchatLoginkitPlugin
+        .hasAccessToScope('https://auth.snapchat.com/oauth2/api/user.display_name');
+    print("hasAccess: $hasAccess");
+  }
+
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
-    final String? resp = await _snapchatLoginkitPlugin.fetchAccessToken();
-    print("Token: $resp");
-
-    final bool hasAccess = await _snapchatLoginkitPlugin.hasAccessToScope('display_name');
-    print("hasAccess: $hasAccess");
 
     try {
       platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
