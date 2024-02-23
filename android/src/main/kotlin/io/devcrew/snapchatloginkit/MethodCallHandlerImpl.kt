@@ -50,7 +50,7 @@ class MethodCallHandlerImpl(
             }
 
             Method.hasAccessToScope -> {
-                hasAccessToScope(call.arguments as String, result)
+                hasAccessToScope(call.arguments as? String, result)
             }
 
 
@@ -123,7 +123,8 @@ class MethodCallHandlerImpl(
         })
     }
 
-    private fun hasAccessToScope(scope: String, result: Result) = result.success(snapLogin.hasAccessToScope(scope))
+    private fun hasAccessToScope(scope: String?, result: Result) =
+        result.success(snapLogin.hasAccessToScope(scope ?: ""))
 
     private val loginStateCallback = object : LoginStateCallback {
         override fun onStart() {
