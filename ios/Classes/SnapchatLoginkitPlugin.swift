@@ -40,6 +40,12 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
         case Method.fetchUserData:
             fetchUserData(call.arguments as? [String : Any], result)
             
+        case Method.fetchAccessToken:
+            fetchAccessToken(result)
+            
+        case Method.hasAccessToScope:
+            hasAccessToScope(call.arguments as? String, result)
+            
         case "getPlatformVersion":
             result("iOS " + UIDevice.current.systemVersion)
             
@@ -50,8 +56,11 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
     }
     
     
-    // MARK: - Functions  -
-    
+}
+
+// MARK: - Functions  -
+
+extension SnapchatLoginkitPlugin {
     private func login() {
         addLoginStateCallback()
         SCSDKLoginClient.login(from: nil) { status, error in
@@ -109,6 +118,19 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
             result(userDataResponse.toMap())
             
         }
-
+    }
+    
+    private func fetchAccessToken(_ result: @escaping FlutterResult) {
+        SCSDKLoginClient.fetchAccessToken { token, error in
+            if let error = error {
+                debugPrint(error)
+            }
+            
+            result(token)
+        }
+    }
+    
+    private func hasAccessToScope(_ scope: String?, _ result: @escaping FlutterResult) {
+        result(SCSDKLoginClient.hasAccess(toScope: scope ?? ""))
     }
 }
