@@ -51,4 +51,7 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
 
   Future<String> fetchAccessToken() =>
       throw UnimplementedError('fetchAccessToken() has not been implemented.');
+
+  Future<bool> hasAccessToScope(String scope) =>
+      throw UnimplementedError('hasAccessToScope() has not been implemented.');
 }

@@ -39,4 +39,7 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
 
   @override
   Future<String> fetchAccessToken() async => await methodChannel.invokeMethod('fetchAccessToken');
+
+  @override
+  Future<bool> hasAccessToScope(String scope) async => await methodChannel.invokeMethod('hasAccessToScope');
 }
