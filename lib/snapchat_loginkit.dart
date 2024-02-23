@@ -32,31 +32,20 @@ class SnapchatLoginkit {
     });
   }
 
-  Future<String?> getPlatformVersion() {
-    return SnapchatLoginkitPlatform.instance.getPlatformVersion();
-  }
+  Future<String?> getPlatformVersion() => SnapchatLoginkitPlatform.instance.getPlatformVersion();
 
-  void login() {
-    SnapchatLoginkitPlatform.instance.login();
-  }
+  void login() => SnapchatLoginkitPlatform.instance.login();
 
-  void addLoginStateCallback() {
-    SnapchatLoginkitPlatform.instance.addLoginStateCallback();
-  }
+  void addLoginStateCallback() => SnapchatLoginkitPlatform.instance.addLoginStateCallback();
 
-  void removeLoginStateCallback() {
-    SnapchatLoginkitPlatform.instance.removeLoginStateCallback();
-  }
+  void removeLoginStateCallback() => SnapchatLoginkitPlatform.instance.removeLoginStateCallback();
 
-  void logout() {
-    SnapchatLoginkitPlatform.instance.logout();
-  }
+  void logout() => SnapchatLoginkitPlatform.instance.logout();
 
-  Future<bool> isUserLoggedIn() {
-    return SnapchatLoginkitPlatform.instance.isUserLoggedIn();
-  }
+  Future<bool> isUserLoggedIn() => SnapchatLoginkitPlatform.instance.isUserLoggedIn();
 
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) async {
-    return await SnapchatLoginkitPlatform.instance.fetchUserData(query);
-  }
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) async =>
+      await SnapchatLoginkitPlatform.instance.fetchUserData(query);
+
+  Future<String> fetchAccessToken() async => await SnapchatLoginkitPlatform.instance.fetchAccessToken();
 }

@@ -28,35 +28,27 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
     _instance = instance;
   }
 
-  MethodChannel getMethodChannel() {
-    throw UnimplementedError('getMethodChannel() has not been implemented.');
-  }
+  MethodChannel getMethodChannel() =>
+      throw UnimplementedError('getMethodChannel() has not been implemented.');
 
-  Future<String?> getPlatformVersion() {
-    throw UnimplementedError('platformVersion() has not been implemented.');
-  }
+  Future<String?> getPlatformVersion() =>
+      throw UnimplementedError('platformVersion() has not been implemented.');
 
-  void login() {
-    throw UnimplementedError('login() has not been implemented.');
-  }
+  void login() => throw UnimplementedError('login() has not been implemented.');
 
-  Future<bool> isUserLoggedIn() async {
-    throw UnimplementedError('isUserLoggedIn() has not been implemented.');
-  }
+  Future<bool> isUserLoggedIn() => throw UnimplementedError('isUserLoggedIn() has not been implemented.');
 
-  void addLoginStateCallback() {
-    throw UnimplementedError('addLoginStateCallback() has not been implemented.');
-  }
+  void addLoginStateCallback() =>
+      throw UnimplementedError('addLoginStateCallback() has not been implemented.');
 
-  void removeLoginStateCallback() {
-    throw UnimplementedError('removeLoginStateCallback() has not been implemented.');
-  }
+  void removeLoginStateCallback() =>
+      throw UnimplementedError('removeLoginStateCallback() has not been implemented.');
 
-  void logout() {
-    throw UnimplementedError('logout() has not been implemented.');
-  }
+  void logout() => throw UnimplementedError('logout() has not been implemented.');
 
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) {
-    throw UnimplementedError('fetchUserData() has not been implemented.');
-  }
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) =>
+      throw UnimplementedError('fetchUserData() has not been implemented.');
+
+  Future<String> fetchAccessToken() =>
+      throw UnimplementedError('fetchAccessToken() has not been implemented.');
 }

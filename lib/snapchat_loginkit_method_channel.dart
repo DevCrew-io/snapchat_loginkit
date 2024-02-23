@@ -12,44 +12,31 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
   final methodChannel = const MethodChannel('snapchat_loginkit');
 
   @override
-  Future<String?> getPlatformVersion() async {
-    final version = await methodChannel.invokeMethod<String>('getPlatformVersion');
-    return version;
-  }
+  Future<String?> getPlatformVersion() async =>
+      await methodChannel.invokeMethod<String>('getPlatformVersion');
 
   @override
-  void login() {
-    methodChannel.invokeMethod<String>('login');
-  }
+  void login() => methodChannel.invokeMethod<String>('login');
 
   @override
-  void logout() {
-    methodChannel.invokeMethod<String>('logout');
-  }
+  void logout() => methodChannel.invokeMethod<String>('logout');
 
   @override
-  Future<bool> isUserLoggedIn() async {
-    final isUserLoggedIn = await methodChannel.invokeMethod<bool>('isUserLoggedIn');
-    return isUserLoggedIn ?? false;
-  }
+  Future<bool> isUserLoggedIn() async => await methodChannel.invokeMethod('isUserLoggedIn');
 
   @override
-  void addLoginStateCallback() {
-    methodChannel.invokeMethod<String>('addLoginStateCallback');
-  }
+  void addLoginStateCallback() => methodChannel.invokeMethod<String>('addLoginStateCallback');
 
   @override
-  void removeLoginStateCallback() {
-    methodChannel.invokeMethod<String>('removeLoginStateCallback');
-  }
+  void removeLoginStateCallback() => methodChannel.invokeMethod<String>('removeLoginStateCallback');
 
   @override
-  MethodChannel getMethodChannel() {
-    return methodChannel;
-  }
+  MethodChannel getMethodChannel() => methodChannel;
 
   @override
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) async {
-    return UserDataResponse.fromMap(await methodChannel.invokeMethod('fetchUserData', query.toMap()));
-  }
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) async =>
+      UserDataResponse.fromMap(await methodChannel.invokeMethod('fetchUserData', query.toMap()));
+
+  @override
+  Future<String> fetchAccessToken() async => await methodChannel.invokeMethod('fetchAccessToken');
 }
