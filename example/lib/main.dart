@@ -104,37 +104,40 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   Widget userprofileWidget() => SingleChildScrollView(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              radius: 50, // Image radius
-              backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
-            ),
-            const SizedBox(height: 16),
-            Text('Display Name: ${userDataResponse.data?.displayName}'),
-            const SizedBox(height: 16),
-            Text('External ID: ${userDataResponse.data?.externalId}'),
-            const SizedBox(height: 16),
-            Text('Avatar ID: ${userDataResponse.data?.avatarId}'),
-            const SizedBox(height: 16),
-            Text('Token ID: ${userDataResponse.data?.tokenId}'),
-            const SizedBox(height: 16),
-            Text('Profile Link: ${userDataResponse.data?.profileLink}'),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                _snapchatLoginkitPlugin.logout();
-                setState(() {
-                  isUserLoggedIn = false;
-                });
-              },
-              child: const Text('Logout'),
-            ),
-            const SizedBox(height: 16),
-            Text('Result: ${userDataResponse.code}: ${userDataResponse.message}'),
-            const SizedBox(height: 32),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 50, // Image radius
+                backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
+              ),
+              const SizedBox(height: 16),
+              Text('Display Name: ${userDataResponse.data?.displayName}'),
+              const SizedBox(height: 16),
+              Text('External ID: ${userDataResponse.data?.externalId}'),
+              const SizedBox(height: 16),
+              Text('Avatar ID: ${userDataResponse.data?.avatarId}'),
+              const SizedBox(height: 16),
+              Text('Token ID: ${userDataResponse.data?.tokenId}'),
+              const SizedBox(height: 16),
+              Text('Profile Link: ${userDataResponse.data?.profileLink}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  _snapchatLoginkitPlugin.logout();
+                  setState(() {
+                    isUserLoggedIn = false;
+                  });
+                },
+                child: const Text('Logout'),
+              ),
+              const SizedBox(height: 16),
+              Text('Result: ${userDataResponse.code}: ${userDataResponse.message}'),
+              const SizedBox(height: 32),
+            ],
+          ),
         ),
       );
 
