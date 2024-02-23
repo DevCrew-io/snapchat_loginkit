@@ -1,9 +1,11 @@
 package io.devcrew.snapchatloginkit
 
 import android.util.Log
+import com.snap.loginkit.AccessTokenResultCallback
 import com.snap.loginkit.LoginStateCallback
 import com.snap.loginkit.SnapLogin
 import com.snap.loginkit.UserDataResultCallback
+import com.snap.loginkit.exceptions.AccessTokenException
 import com.snap.loginkit.exceptions.LoginException
 import com.snap.loginkit.exceptions.UserDataException
 import com.snap.loginkit.models.UserDataResult
@@ -42,6 +44,15 @@ class MethodCallHandlerImpl(
             Method.fetchUserData -> {
                 fetchUserData(call.arguments as? Map<String, Any>, result)
             }
+
+            Method.fetchAccessToken -> {
+                fetchAccessToken(result)
+            }
+
+            Method.hasAccessToScope -> {
+                hasAccessToScope(call.arguments as? String, result)
+            }
+
 
             "getPlatformVersion" -> {
                 result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -98,6 +109,23 @@ class MethodCallHandlerImpl(
         }
     }
 
+    private fun fetchAccessToken(result: Result) {
+        snapLogin.fetchAccessToken(object : AccessTokenResultCallback {
+            override fun onSuccess(accessToken: String) {
+                println("Token: $accessToken")
+                result.success(accessToken)
+            }
+
+            override fun onFailure(exception: AccessTokenException) {
+                println("Error: ${exception.message}")
+                result.success(null)
+            }
+        })
+    }
+
+    private fun hasAccessToScope(scope: String?, result: Result) =
+        result.success(snapLogin.hasAccessToScope(scope ?: ""))
+
     private val loginStateCallback = object : LoginStateCallback {
         override fun onStart() {
             Log.d("SnapChatLoginKit", "onStart")
@@ -135,6 +163,8 @@ class MethodCallHandlerImpl(
         const val logout = "logout"
         const val isUserLoggedIn = "isUserLoggedIn"
         const val fetchUserData = "fetchUserData"
+        const val fetchAccessToken = "fetchAccessToken"
+        const val hasAccessToScope = "hasAccessToScope"
 
         object Callback {
             const val onStart = "onStart"

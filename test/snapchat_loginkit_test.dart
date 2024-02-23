@@ -51,6 +51,18 @@ class MockSnapchatLoginkitPlatform
     throw UserDataResponse(code: 0, message: "");
   }
 
+  @override
+  Future<String?> fetchAccessToken() {
+    // TODO: implement fetchAccessToken
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<bool> hasAccessToScope(String scope) {
+    // TODO: implement hasAccessToScope
+    throw UnimplementedError();
+  }
+
 }
 
 void main() {

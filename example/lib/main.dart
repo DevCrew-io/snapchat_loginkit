@@ -29,6 +29,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     _snapchatLoginkitPlugin.addLoginStateCallback();
     checkUserIsLoggedIn();
     initPlatformState();
+    hasAccessToScope();
+    fetchAccessToken();
   }
 
   checkUserIsLoggedIn() async {
@@ -39,11 +41,23 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     }
   }
 
+  fetchAccessToken() async {
+    final String? resp = await _snapchatLoginkitPlugin.fetchAccessToken();
+    print("Token: $resp");
+  }
+
+  hasAccessToScope() async {
+    final bool hasAccess = await _snapchatLoginkitPlugin
+        .hasAccessToScope('https://auth.snapchat.com/oauth2/api/user.display_name');
+    print("hasAccess: $hasAccess");
+  }
+
   // Platform messages are asynchronous, so we initialize in an async method.
   Future<void> initPlatformState() async {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
+
     try {
       platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
     } on PlatformException {
@@ -90,39 +104,42 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   Widget userprofileWidget() => SingleChildScrollView(
-    child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            CircleAvatar(
-              radius: 50, // Image radius
-              backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
-            ),
-            const SizedBox(height: 16),
-            Text('Display Name: ${userDataResponse.data?.displayName}'),
-            const SizedBox(height: 16),
-            Text('External ID: ${userDataResponse.data?.externalId}'),
-            const SizedBox(height: 16),
-            Text('Avatar ID: ${userDataResponse.data?.avatarId}'),
-            const SizedBox(height: 16),
-            Text('Token ID: ${userDataResponse.data?.tokenId}'),
-            const SizedBox(height: 16),
-            Text('Profile Link: ${userDataResponse.data?.profileLink}'),
-            const SizedBox(height: 16),
-            ElevatedButton(
-              onPressed: () {
-                _snapchatLoginkitPlugin.logout();
-                setState(() {
-                  isUserLoggedIn = false;
-                });
-              },
-              child: const Text('Logout'),
-            ),
-            const SizedBox(height: 16),
-            Text('Result: ${userDataResponse.code}: ${userDataResponse.message}'),
-            const SizedBox(height: 32),
-          ],
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              CircleAvatar(
+                radius: 50, // Image radius
+                backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
+              ),
+              const SizedBox(height: 16),
+              Text('Display Name: ${userDataResponse.data?.displayName}'),
+              const SizedBox(height: 16),
+              Text('External ID: ${userDataResponse.data?.externalId}'),
+              const SizedBox(height: 16),
+              Text('Avatar ID: ${userDataResponse.data?.avatarId}'),
+              const SizedBox(height: 16),
+              Text('Token ID: ${userDataResponse.data?.tokenId}'),
+              const SizedBox(height: 16),
+              Text('Profile Link: ${userDataResponse.data?.profileLink}'),
+              const SizedBox(height: 16),
+              ElevatedButton(
+                onPressed: () {
+                  _snapchatLoginkitPlugin.logout();
+                  setState(() {
+                    isUserLoggedIn = false;
+                  });
+                },
+                child: const Text('Logout'),
+              ),
+              const SizedBox(height: 16),
+              Text('Result: ${userDataResponse.code}: ${userDataResponse.message}'),
+              const SizedBox(height: 32),
+            ],
+          ),
         ),
-  );
+      );
 
   @override
   void onFailure(String message) {
@@ -140,8 +157,14 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   fetchUserData() async {
-    UserDataQuery query =
-        UserDataQueryBuilder().withDisplayName().withBitmojiAvatarId().withBitmojiAvatarUrl().withExternalId().withIdToken().withProfileLink().build();
+    UserDataQuery query = UserDataQueryBuilder()
+        .withDisplayName()
+        .withBitmojiAvatarId()
+        .withBitmojiAvatarUrl()
+        .withExternalId()
+        .withIdToken()
+        .withProfileLink()
+        .build();
     userDataResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
   }
 
