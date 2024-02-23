@@ -47,7 +47,7 @@ class SnapchatLoginkit {
   Future<UserDataResponse> fetchUserData(UserDataQuery query) async =>
       await SnapchatLoginkitPlatform.instance.fetchUserData(query);
 
-  Future<String> fetchAccessToken() async => await SnapchatLoginkitPlatform.instance.fetchAccessToken();
+  Future<String?> fetchAccessToken() async => await SnapchatLoginkitPlatform.instance.fetchAccessToken();
 
   Future<bool> hasAccessToScope(String scope) async =>
       await SnapchatLoginkitPlatform.instance.hasAccessToScope(scope);

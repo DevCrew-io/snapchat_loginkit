@@ -44,6 +44,12 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     String platformVersion;
     // Platform messages may fail, so we use a try/catch PlatformException.
     // We also handle the message potentially returning null.
+    final String? resp = await _snapchatLoginkitPlugin.fetchAccessToken();
+    print("Token: $resp");
+
+    final bool hasAccess = await _snapchatLoginkitPlugin.hasAccessToScope('display_name');
+    print("hasAccess: $hasAccess");
+
     try {
       platformVersion = await _snapchatLoginkitPlugin.getPlatformVersion() ?? 'Unknown platform version';
     } on PlatformException {
@@ -90,7 +96,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   Widget userprofileWidget() => SingleChildScrollView(
-    child: Column(
+        child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             CircleAvatar(
@@ -122,7 +128,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
             const SizedBox(height: 32),
           ],
         ),
-  );
+      );
 
   @override
   void onFailure(String message) {
@@ -140,8 +146,14 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   fetchUserData() async {
-    UserDataQuery query =
-        UserDataQueryBuilder().withDisplayName().withBitmojiAvatarId().withBitmojiAvatarUrl().withExternalId().withIdToken().withProfileLink().build();
+    UserDataQuery query = UserDataQueryBuilder()
+        .withDisplayName()
+        .withBitmojiAvatarId()
+        .withBitmojiAvatarUrl()
+        .withExternalId()
+        .withIdToken()
+        .withProfileLink()
+        .build();
     userDataResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
   }
 
