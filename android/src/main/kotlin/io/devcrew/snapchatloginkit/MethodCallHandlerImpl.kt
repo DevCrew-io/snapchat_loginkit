@@ -95,7 +95,6 @@ class MethodCallHandlerImpl(
                 override fun onFailure(exception: UserDataException) {
                     userDataResponse.code = exception.statusCode
                     userDataResponse.message = exception.message.toString()
-                    userDataResponse.data = mapOf()
                     result.success(userDataResponse.toMap())
                 }
             })

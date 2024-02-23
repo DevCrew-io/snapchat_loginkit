@@ -51,9 +51,9 @@ data class UserFetchDataQuery(
 data class UserDataResponse(
     var code: Int = 0,
     var message: String = "",
-    var data: Map<String, String?> = mapOf()
+    var data: Map<String, String?>? = null
 ) {
-    fun toMap(): Map<String, Any> = mapOf(
+    fun toMap(): Map<String, Any?> = mapOf(
         "code" to code,
         "message" to message,
         "data" to data
