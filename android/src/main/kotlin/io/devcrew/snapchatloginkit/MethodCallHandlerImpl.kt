@@ -70,16 +70,13 @@ class MethodCallHandlerImpl(
         val query = arguments?.let { UserFetchDataQuery(it) }
         val userDataResponse = UserDataResponse()
         query?.let {
-            val userDataQuery = it.prepareUserDataQuery()
-            snapLogin.fetchUserData(userDataQuery, object : UserDataResultCallback {
+            snapLogin.fetchUserData(it.prepareUserDataQuery(), object : UserDataResultCallback {
                 override fun onSuccess(userDataResult: UserDataResult) {
                     if (userDataResult.data == null) {
                         return
                     }
                     if (userDataResult.data!!.meData != null) {
                         val data = userDataResult.data!!.meData!!
-                        userDataResponse.code = 200
-                        userDataResponse.message = "Success"
                         userDataResponse.data = mapOf(
                             "displayName" to data.displayName,
                             "avatarId" to data.bitmojiData?.avatarId,
