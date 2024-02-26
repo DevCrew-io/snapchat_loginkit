@@ -55,12 +55,13 @@ android {
     buildTypes {
         debug {
             manifestPlaceholders = [
-                    SNAP_CLIENT_ID      : localProperties.getProperty("com.snap.kit.clientId"),
-                    SNAP_REDIRECT_URL   : localProperties.getProperty("com.snap.kit.redirectUrl"),
-                    SNAP_SCOPES_ARRAY   : "@array/snap_connect_scopes",
-                    SNAP_REDIRECT_HOST  : localProperties.getProperty("com.snap.kit.host"),
-                    SNAP_REDIRECT_PATH  : localProperties.getProperty("com.snap.kit.path"),
-                    SNAP_REDIRECT_SCHEME: localProperties.getProperty("com.snap.kit.scheme")
+                    SNAP_CLIENT_ID           : localProperties.getProperty("com.snap.kit.clientId"),
+                    SNAP_REDIRECT_URL        : localProperties.getProperty("com.snap.kit.redirectUrl"),
+                    SNAP_SCOPES_ARRAY        : "@array/snap_connect_scopes",
+                    SNAP_REDIRECT_HOST       : localProperties.getProperty("com.snap.kit.host"),
+                    SNAP_REDIRECT_PATH       : localProperties.getProperty("com.snap.kit.path"),
+                    SNAP_REDIRECT_SCHEME     : localProperties.getProperty("com.snap.kit.scheme"),
+                    FIREBASE_CUSTOM_TOKEN_URL: localProperties.getProperty("com.snap.kit.firebaseExtCustomTokenUrl")
             ]
         }
         release {
