@@ -54,4 +54,7 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
 
   Future<bool> hasAccessToScope(String scope) =>
       throw UnimplementedError('hasAccessToScope() has not been implemented.');
+
+  Future<String?> startFirebaseTokenGrant() =>
+      throw UnimplementedError('startFirebaseTokenGrant() has not been implemented.');
 }
