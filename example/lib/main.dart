@@ -43,13 +43,18 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
 
   fetchAccessToken() async {
     final String? resp = await _snapchatLoginkitPlugin.fetchAccessToken();
-    print("Token: $resp");
+    debugPrint("Token: $resp");
   }
 
   hasAccessToScope() async {
     final bool hasAccess = await _snapchatLoginkitPlugin
         .hasAccessToScope('https://auth.snapchat.com/oauth2/api/user.display_name');
-    print("hasAccess: $hasAccess");
+    debugPrint("hasAccess: $hasAccess");
+  }
+
+  startFirebaseTokenGrant() async {
+    final String? firebaseToken = await _snapchatLoginkitPlugin.startFirebaseTokenGrant();
+    debugPrint("FirebaseTokenGrant: $firebaseToken");
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
