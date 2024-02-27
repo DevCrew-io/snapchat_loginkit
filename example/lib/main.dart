@@ -55,6 +55,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   loginWithFirebase() async {
     final String? firebaseToken = await _snapchatLoginkitPlugin.loginWithFirebase();
     debugPrint("FirebaseTokenGrant: $firebaseToken");
+    // Here you should be good to authenticate with Firebase
+    // using "signInWithCustomToken()" API
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
