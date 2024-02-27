@@ -45,6 +45,6 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
       await methodChannel.invokeMethod('hasAccessToScope', scope);
 
   @override
-  Future<String?> startFirebaseTokenGrant() async =>
+  Future<String?> loginWithFirebase() async =>
       await methodChannel.invokeMethod('startFirebaseTokenGrant');
 }

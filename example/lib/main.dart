@@ -52,8 +52,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     debugPrint("hasAccess: $hasAccess");
   }
 
-  startFirebaseTokenGrant() async {
-    final String? firebaseToken = await _snapchatLoginkitPlugin.startFirebaseTokenGrant();
+  loginWithFirebase() async {
+    final String? firebaseToken = await _snapchatLoginkitPlugin.loginWithFirebase();
     debugPrint("FirebaseTokenGrant: $firebaseToken");
   }
 

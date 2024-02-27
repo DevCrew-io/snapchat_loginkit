@@ -52,6 +52,6 @@ class SnapchatLoginkit {
   Future<bool> hasAccessToScope(String scope) async =>
       await SnapchatLoginkitPlatform.instance.hasAccessToScope(scope);
 
-  Future<String?> startFirebaseTokenGrant() async =>
-      await SnapchatLoginkitPlatform.instance.startFirebaseTokenGrant();
+  Future<String?> loginWithFirebase() async =>
+      await SnapchatLoginkitPlatform.instance.loginWithFirebase();
 }

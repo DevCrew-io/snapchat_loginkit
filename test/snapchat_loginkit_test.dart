@@ -47,7 +47,7 @@ class MockSnapchatLoginkitPlatform with MockPlatformInterfaceMixin implements Sn
   Future<bool> hasAccessToScope(String scope) => throw UnimplementedError();
 
   @override
-  Future<String?> startFirebaseTokenGrant() => throw UnimplementedError();
+  Future<String?> loginWithFirebase() => throw UnimplementedError();
 }
 
 void main() {
