@@ -20,7 +20,7 @@ class User {
   );
 }
 
-class UserResponse extends SnapchatResponse<User> {
+class UserResponse extends SnapchatResponse {
   User? user;
   UserResponse({super.code, super.message, this.user});
 

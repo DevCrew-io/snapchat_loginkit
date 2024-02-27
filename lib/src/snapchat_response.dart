@@ -1,7 +1,7 @@
 
 
 
-abstract class SnapchatResponse<T> {
+abstract class SnapchatResponse {
   int code;
   String message;
 
