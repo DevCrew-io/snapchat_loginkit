@@ -1,11 +1,11 @@
-import 'dart:ffi';
-
 import 'package:flutter/src/services/platform_channel.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit_platform_interface.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
+import 'package:snapchat_loginkit/src/token_response.dart';
+import 'package:snapchat_loginkit/src/user_response.dart';
 
 class MockSnapchatLoginkitPlatform with MockPlatformInterfaceMixin implements SnapchatLoginkitPlatform {
   @override
@@ -38,16 +38,16 @@ class MockSnapchatLoginkitPlatform with MockPlatformInterfaceMixin implements Sn
   }
 
   @override
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) => throw UserDataResponse(code: 0, message: "");
+  Future<UserResponse> fetchUserData(UserDataQuery query) => throw UserResponse(code: 0, message: "");
 
   @override
-  Future<String?> fetchAccessToken() => throw UnimplementedError();
+  Future<TokenResponse> fetchAccessToken() => throw UnimplementedError();
 
   @override
   Future<bool> hasAccessToScope(String scope) => throw UnimplementedError();
 
   @override
-  Future<String?> loginWithFirebase() => throw UnimplementedError();
+  Future<TokenResponse> loginWithFirebase() => throw UnimplementedError();
 }
 
 void main() {

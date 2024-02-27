@@ -1,4 +1,5 @@
-import 'package:snapchat_loginkit/src/user_data.dart';
+import 'package:snapchat_loginkit/src/token_response.dart';
+import 'package:snapchat_loginkit/src/user_response.dart';
 import 'snapchat_loginkit_platform_interface.dart';
 
 import 'src/snap_callbacks.dart';
@@ -6,7 +7,9 @@ export 'src/snap_callbacks.dart';
 
 import 'src/user_data_query_builder.dart';
 export 'src/user_data_query_builder.dart';
-export 'src/user_data.dart';
+
+export 'src/user_response.dart';
+export 'src/token_response.dart';
 
 class SnapchatLoginkit {
   final LoginStateCallback? loginStateCallback;
@@ -44,14 +47,14 @@ class SnapchatLoginkit {
 
   Future<bool> isUserLoggedIn() => SnapchatLoginkitPlatform.instance.isUserLoggedIn();
 
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) async =>
+  Future<UserResponse> fetchUserData(UserDataQuery query) async =>
       await SnapchatLoginkitPlatform.instance.fetchUserData(query);
 
-  Future<String?> fetchAccessToken() async => await SnapchatLoginkitPlatform.instance.fetchAccessToken();
+  Future<TokenResponse> fetchAccessToken() async => await SnapchatLoginkitPlatform.instance.fetchAccessToken();
 
   Future<bool> hasAccessToScope(String scope) async =>
       await SnapchatLoginkitPlatform.instance.hasAccessToScope(scope);
 
-  Future<String?> loginWithFirebase() async =>
+  Future<TokenResponse> loginWithFirebase() async =>
       await SnapchatLoginkitPlatform.instance.loginWithFirebase();
 }

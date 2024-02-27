@@ -1,4 +1,4 @@
-package io.devcrew.snapchatloginkit
+package io.devcrew.snapchatloginkit.model
 
 import com.snap.loginkit.BitmojiQuery;
 import com.snap.loginkit.UserDataQuery;
@@ -48,16 +48,5 @@ data class UserFetchDataQuery(
     }
 }
 
-data class UserDataResponse(
-    var code: Int = 200,
-    var message: String = "Success",
-    var data: Map<String, String?>? = null
-) {
-    fun toMap(): Map<String, Any?> = mapOf(
-        "code" to code,
-        "message" to message,
-        "data" to data
-    )
-}
 
 

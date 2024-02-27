@@ -11,6 +11,9 @@ import com.snap.loginkit.exceptions.FirebaseCustomTokenException
 import com.snap.loginkit.exceptions.LoginException
 import com.snap.loginkit.exceptions.UserDataException
 import com.snap.loginkit.models.UserDataResult
+import io.devcrew.snapchatloginkit.model.TokenResponse
+import io.devcrew.snapchatloginkit.model.UserFetchDataQuery
+import io.devcrew.snapchatloginkit.model.UserResponse
 import io.flutter.plugin.common.MethodCall
 import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.MethodChannel.MethodCallHandler
@@ -84,7 +87,7 @@ class MethodCallHandlerImpl(
 
     private fun fetchUserData(arguments: Map<String, Any>?, result: Result) {
         val query = arguments?.let { UserFetchDataQuery(it) }
-        val userDataResponse = UserDataResponse()
+        val userResponse = UserResponse()
         query?.let {
             snapLogin.fetchUserData(it.prepareUserDataQuery(), object : UserDataResultCallback {
                 override fun onSuccess(userDataResult: UserDataResult) {
@@ -93,7 +96,7 @@ class MethodCallHandlerImpl(
                     }
                     if (userDataResult.data!!.meData != null) {
                         val data = userDataResult.data!!.meData!!
-                        userDataResponse.data = mapOf(
+                        userResponse.userData = mapOf(
                             "displayName" to data.displayName,
                             "avatarId" to data.bitmojiData?.avatarId,
                             "avatarUrl" to data.bitmojiData?.twoDAvatarUrl,
@@ -102,28 +105,30 @@ class MethodCallHandlerImpl(
                             "profileLink" to ""
                         )
                     }
-                    result.success(userDataResponse.toMap())
+                    result.success(userResponse.toMap())
                 }
 
                 override fun onFailure(exception: UserDataException) {
-                    userDataResponse.code = exception.statusCode
-                    userDataResponse.message = exception.message.toString()
-                    result.success(userDataResponse.toMap())
+                    userResponse.code = exception.statusCode
+                    userResponse.message = exception.message.toString()
+                    result.success(userResponse.toMap())
                 }
             })
         }
     }
 
     private fun fetchAccessToken(result: Result) {
+        val response = TokenResponse()
         snapLogin.fetchAccessToken(object : AccessTokenResultCallback {
             override fun onSuccess(accessToken: String) {
-                println("Token: $accessToken")
-                result.success(accessToken)
+                response.token = accessToken
+                result.success(response.toMap())
             }
 
             override fun onFailure(exception: AccessTokenException) {
-                println("Error: ${exception.message}")
-                result.success(null)
+                response.code = exception.statusCode
+                response.message = exception.message.toString()
+                result.success(response.toMap())
             }
         })
     }
@@ -132,15 +137,18 @@ class MethodCallHandlerImpl(
         result.success(snapLogin.hasAccessToScope(scope ?: ""))
 
     private fun loginWithFirebase(result: Result) {
+        val response = TokenResponse()
         snapLogin.startFirebaseTokenGrant(object : FirebaseCustomTokenResultCallback {
             override fun onSuccess(token: String) {
-                result.success(token)
+                response.token = token
+                result.success(response.toMap())
             }
 
             override fun onFailure(exception: FirebaseCustomTokenException) {
-                result.success(null)
+                response.code = exception.statusCode
+                response.message = exception.message.toString()
+                result.success(response.toMap())
             }
-
         })
     }
 

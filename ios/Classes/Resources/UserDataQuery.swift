@@ -58,19 +58,3 @@ class UserFetchDataQuery {
         return builder.build()
     }
 }
-
-
-
-// MARK: - UserDataResponse -
-
-class UserDataResponse {
-    var code: Int = 200
-    var message: String = "Success"
-    var data: [String : String?]?
-    
-    func toMap() -> [String : Any] {
-        return ["code" : code,
-                "message" : message,
-                "data" : data as Any]
-    }
-}
