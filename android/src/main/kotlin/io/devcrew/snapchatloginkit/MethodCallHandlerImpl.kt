@@ -55,8 +55,8 @@ class MethodCallHandlerImpl(
                 hasAccessToScope(call.arguments as? String, result)
             }
 
-            Method.startFirebaseTokenGrant -> {
-                startFirebaseTokenGrant(result)
+            Method.loginWithFirebase -> {
+                loginWithFirebase(result)
             }
 
             "getPlatformVersion" -> {
@@ -131,7 +131,7 @@ class MethodCallHandlerImpl(
     private fun hasAccessToScope(scope: String?, result: Result) =
         result.success(snapLogin.hasAccessToScope(scope ?: ""))
 
-    private fun startFirebaseTokenGrant(result: Result) {
+    private fun loginWithFirebase(result: Result) {
         snapLogin.startFirebaseTokenGrant(object : FirebaseCustomTokenResultCallback {
             override fun onSuccess(token: String) {
                 result.success(token)
@@ -183,7 +183,7 @@ class MethodCallHandlerImpl(
         const val fetchUserData = "fetchUserData"
         const val fetchAccessToken = "fetchAccessToken"
         const val hasAccessToScope = "hasAccessToScope"
-        const val startFirebaseTokenGrant = "startFirebaseTokenGrant"
+        const val loginWithFirebase = "loginWithFirebase"
 
         object Callback {
             const val onStart = "onStart"
