@@ -1,9 +1,8 @@
-import 'dart:ffi';
-
 import 'package:flutter/services.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
-import 'package:snapchat_loginkit/src/user_data.dart';
+import 'package:snapchat_loginkit/src/token_response.dart';
 import 'package:snapchat_loginkit/src/user_data_query_builder.dart';
+import 'package:snapchat_loginkit/src/user_response.dart';
 
 import 'snapchat_loginkit_method_channel.dart';
 
@@ -46,15 +45,15 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
 
   void logout() => throw UnimplementedError('logout() has not been implemented.');
 
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) =>
+  Future<UserResponse> fetchUserData(UserDataQuery query) =>
       throw UnimplementedError('fetchUserData() has not been implemented.');
 
-  Future<String?> fetchAccessToken() =>
+  Future<TokenResponse> fetchAccessToken() =>
       throw UnimplementedError('fetchAccessToken() has not been implemented.');
 
   Future<bool> hasAccessToScope(String scope) =>
       throw UnimplementedError('hasAccessToScope() has not been implemented.');
 
-  Future<String?> loginWithFirebase() =>
-      throw UnimplementedError('startFirebaseTokenGrant() has not been implemented.');
+  Future<TokenResponse> loginWithFirebase() =>
+      throw UnimplementedError('loginWithFirebase() has not been implemented.');
 }

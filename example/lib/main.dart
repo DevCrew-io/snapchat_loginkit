@@ -18,7 +18,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   String _platformVersion = 'Unknown';
   String _loginResult = "";
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
-  UserDataResponse userDataResponse = UserDataResponse();
+  UserResponse userResponse = UserResponse();
 
   bool isUserLoggedIn = false;
 
@@ -42,8 +42,10 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   fetchAccessToken() async {
-    final String? resp = await _snapchatLoginkitPlugin.fetchAccessToken();
-    debugPrint("Token: $resp");
+    final response = await _snapchatLoginkitPlugin.fetchAccessToken();
+    debugPrint("Token Code: ${response.code}");
+    debugPrint("Token Message: ${response.message}");
+    debugPrint("Token Token: ${response.token}");
   }
 
   hasAccessToScope() async {
@@ -53,8 +55,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   }
 
   loginWithFirebase() async {
-    final String? firebaseToken = await _snapchatLoginkitPlugin.loginWithFirebase();
-    debugPrint("FirebaseTokenGrant: $firebaseToken");
+    final TokenResponse tokenResponse = await _snapchatLoginkitPlugin.loginWithFirebase();
+    debugPrint("FirebaseTokenGrant: ${tokenResponse.token}");
     // Here you should be good to authenticate with Firebase
     // using "signInWithCustomToken()" API
   }
@@ -118,18 +120,18 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
             children: [
               CircleAvatar(
                 radius: 50, // Image radius
-                backgroundImage: NetworkImage('${userDataResponse.data?.avatarUrl}'),
+                backgroundImage: NetworkImage('${userResponse.user?.avatarUrl}'),
               ),
               const SizedBox(height: 16),
-              Text('Display Name: ${userDataResponse.data?.displayName}'),
+              Text('Display Name: ${userResponse.user?.displayName}'),
               const SizedBox(height: 16),
-              Text('External ID: ${userDataResponse.data?.externalId}'),
+              Text('External ID: ${userResponse.user?.externalId}'),
               const SizedBox(height: 16),
-              Text('Avatar ID: ${userDataResponse.data?.avatarId}'),
+              Text('Avatar ID: ${userResponse.user?.avatarId}'),
               const SizedBox(height: 16),
-              Text('Token ID: ${userDataResponse.data?.tokenId}'),
+              Text('Token ID: ${userResponse.user?.tokenId}'),
               const SizedBox(height: 16),
-              Text('Profile Link: ${userDataResponse.data?.profileLink}'),
+              Text('Profile Link: ${userResponse.user?.profileLink}'),
               const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
@@ -141,7 +143,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
                 child: const Text('Logout'),
               ),
               const SizedBox(height: 16),
-              Text('Result: ${userDataResponse.code}: ${userDataResponse.message}'),
+              Text('Result: ${userResponse.code}: ${userResponse.message}'),
               const SizedBox(height: 32),
             ],
           ),
@@ -172,7 +174,10 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
         .withIdToken()
         .withProfileLink()
         .build();
-    userDataResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
+    userResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
+    debugPrint("User Code: ${userResponse.code}");
+    debugPrint("User Message: ${userResponse.message}");
+    debugPrint("User: ${userResponse.user}");
   }
 
   @override

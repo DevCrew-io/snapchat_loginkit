@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
-import 'package:snapchat_loginkit/src/user_data.dart';
+import 'package:snapchat_loginkit/src/token_response.dart';
+import 'package:snapchat_loginkit/src/user_response.dart';
 
 import 'snapchat_loginkit_platform_interface.dart';
 
@@ -16,35 +17,41 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
       await methodChannel.invokeMethod<String>('getPlatformVersion');
 
   @override
-  void login() => methodChannel.invokeMethod<String>('login');
+  void login() =>
+      methodChannel.invokeMethod<String>('login');
 
   @override
-  void logout() => methodChannel.invokeMethod<String>('logout');
+  void logout() =>
+      methodChannel.invokeMethod<String>('logout');
 
   @override
-  Future<bool> isUserLoggedIn() async => await methodChannel.invokeMethod('isUserLoggedIn');
+  Future<bool> isUserLoggedIn() async =>
+      await methodChannel.invokeMethod('isUserLoggedIn');
 
   @override
-  void addLoginStateCallback() => methodChannel.invokeMethod<String>('addLoginStateCallback');
+  void addLoginStateCallback() =>
+      methodChannel.invokeMethod<String>('addLoginStateCallback');
 
   @override
-  void removeLoginStateCallback() => methodChannel.invokeMethod<String>('removeLoginStateCallback');
+  void removeLoginStateCallback() =>
+      methodChannel.invokeMethod<String>('removeLoginStateCallback');
 
   @override
   MethodChannel getMethodChannel() => methodChannel;
 
   @override
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) async =>
-      UserDataResponse.fromMap(await methodChannel.invokeMethod('fetchUserData', query.toMap()));
+  Future<UserResponse> fetchUserData(UserDataQuery query) async =>
+      UserResponse.fromMap(await methodChannel.invokeMethod('fetchUserData', query.toMap()));
 
   @override
-  Future<String?> fetchAccessToken() async => await methodChannel.invokeMethod('fetchAccessToken');
+  Future<TokenResponse> fetchAccessToken() async =>
+      TokenResponse.fromMap(await methodChannel.invokeMethod('fetchAccessToken'));
 
   @override
   Future<bool> hasAccessToScope(String scope) async =>
       await methodChannel.invokeMethod('hasAccessToScope', scope);
 
   @override
-  Future<String?> loginWithFirebase() async =>
-      await methodChannel.invokeMethod('loginWithFirebase');
+  Future<TokenResponse> loginWithFirebase() async =>
+      TokenResponse.fromMap(await methodChannel.invokeMethod('loginWithFirebase'));
 }

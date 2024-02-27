@@ -91,47 +91,49 @@ extension SnapchatLoginkitPlugin {
     }
     
     private func fetchUserData(_ arguments: [String : Any]?, _ result: @escaping FlutterResult) {
-        let userDataResponse = UserDataResponse()
+        var response = UserResponse()
         
         guard let arguments = arguments else {
-            userDataResponse.code = 421
-            userDataResponse.message = "Invalid or Null Arguments"
-            result(userDataResponse.toMap())
+            response.code = 421
+            response.message = "Invalid or Null Arguments"
+            result(response.toMap())
             return
         }
         
         let query = UserFetchDataQuery(fromMap: arguments)
         SCSDKLoginClient.fetchUserData(with: query.prepareUserDataQuery()) { data, _ in
             
-            userDataResponse.data = [
-                "displayName" : data?.displayName,
-                "avatarId" : data?.bitmojiAvatarID,
-                "avatarUrl" : data?.bitmojiTwoDAvatarUrl,
-                "externalId" : data?.externalID,
-                "tokenId" : data?.idToken,
-                "profileLink" : data?.profileLink
-            ]
+            response.user = User(displayName: data?.displayName,
+                                 avatarId: data?.bitmojiAvatarID,
+                                 avatarUrl: data?.bitmojiTwoDAvatarUrl,
+                                 externalId: data?.externalID,
+                                 tokenId: data?.idToken,
+                                 profileLink: data?.profileLink)
             
-            result(userDataResponse.toMap())
+            result(response.toMap())
             
         } failure: { error, _ in
             
-            userDataResponse.code = (error as? NSError)?.code ?? 400
-            userDataResponse.message = error?.localizedDescription ?? "Unkown Error"
-            result(userDataResponse.toMap())
+            response.code = (error as? NSError)?.code ?? 400
+            response.message = error?.localizedDescription ?? "Unkown Error"
+            result(response.toMap())
             
         }
     }
     
     private func fetchAccessToken(_ result: @escaping FlutterResult) {
         SCSDKLoginClient.fetchAccessToken { token, error in
+            var response = TokenResponse()
             if let error = error {
                 debugPrint(error)
+                response.code = (error as NSError).code
+                response.message = error.localizedDescription
             }
             
-            result(token)
+            response.token = token
+            result(response.toMap())
         }
-    }
+    }  
     
     private func hasAccessToScope(_ scope: String?, _ result: @escaping FlutterResult) {
         result(SCSDKLoginClient.hasAccess(toScope: scope ?? ""))
@@ -139,11 +141,15 @@ extension SnapchatLoginkitPlugin {
     
     private func loginWithFirebase(_ result: @escaping FlutterResult) {
         SCSDKLoginClient.startFirebaseAuth(from: nil) { token, error in
+            var response = TokenResponse()
             if let error = error {
                 debugPrint(error)
+                response.code = (error as NSError).code
+                response.message = error.localizedDescription
             }
             
-            result(token)
+            response.token = token
+            result(response.toMap())
         }
     }
 }
