@@ -14,6 +14,10 @@
             android:name="com.snap.kit.scopes"
             android:resource="${SNAP_SCOPES_ARRAY}" />
 
+        <meta-data
+            android:name="com.snap.kit.firebaseExtCustomTokenUrl"
+            android:value="${FIREBASE_CUSTOM_TOKEN_URL}" />
+
         <activity
             android:name="com.snap.corekit.SnapKitActivity"
             android:exported="true"

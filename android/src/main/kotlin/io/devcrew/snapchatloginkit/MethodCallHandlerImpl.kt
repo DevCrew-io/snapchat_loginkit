@@ -2,10 +2,12 @@ package io.devcrew.snapchatloginkit
 
 import android.util.Log
 import com.snap.loginkit.AccessTokenResultCallback
+import com.snap.loginkit.FirebaseCustomTokenResultCallback
 import com.snap.loginkit.LoginStateCallback
 import com.snap.loginkit.SnapLogin
 import com.snap.loginkit.UserDataResultCallback
 import com.snap.loginkit.exceptions.AccessTokenException
+import com.snap.loginkit.exceptions.FirebaseCustomTokenException
 import com.snap.loginkit.exceptions.LoginException
 import com.snap.loginkit.exceptions.UserDataException
 import com.snap.loginkit.models.UserDataResult
@@ -53,6 +55,9 @@ class MethodCallHandlerImpl(
                 hasAccessToScope(call.arguments as? String, result)
             }
 
+            Method.loginWithFirebase -> {
+                loginWithFirebase(result)
+            }
 
             "getPlatformVersion" -> {
                 result.success("Android ${android.os.Build.VERSION.RELEASE}")
@@ -126,6 +131,19 @@ class MethodCallHandlerImpl(
     private fun hasAccessToScope(scope: String?, result: Result) =
         result.success(snapLogin.hasAccessToScope(scope ?: ""))
 
+    private fun loginWithFirebase(result: Result) {
+        snapLogin.startFirebaseTokenGrant(object : FirebaseCustomTokenResultCallback {
+            override fun onSuccess(token: String) {
+                result.success(token)
+            }
+
+            override fun onFailure(exception: FirebaseCustomTokenException) {
+                result.success(null)
+            }
+
+        })
+    }
+
     private val loginStateCallback = object : LoginStateCallback {
         override fun onStart() {
             Log.d("SnapChatLoginKit", "onStart")
@@ -165,6 +183,7 @@ class MethodCallHandlerImpl(
         const val fetchUserData = "fetchUserData"
         const val fetchAccessToken = "fetchAccessToken"
         const val hasAccessToScope = "hasAccessToScope"
+        const val loginWithFirebase = "loginWithFirebase"
 
         object Callback {
             const val onStart = "onStart"

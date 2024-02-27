@@ -7,18 +7,12 @@ import 'package:snapchat_loginkit/snapchat_loginkit_platform_interface.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit_method_channel.dart';
 import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 
-class MockSnapchatLoginkitPlatform
-    with MockPlatformInterfaceMixin
-    implements SnapchatLoginkitPlatform {
-
+class MockSnapchatLoginkitPlatform with MockPlatformInterfaceMixin implements SnapchatLoginkitPlatform {
   @override
   Future<String?> getPlatformVersion() => Future.value('42');
 
   @override
-  MethodChannel getMethodChannel() {
-    // TODO: implement getMethodChannel
-    throw UnimplementedError();
-  }
+  MethodChannel getMethodChannel() => throw UnimplementedError();
 
   @override
   void login() {
@@ -26,9 +20,7 @@ class MockSnapchatLoginkitPlatform
   }
 
   @override
-  Future<bool> isUserLoggedIn() {
-    return Future.value(false);
-  }
+  Future<bool> isUserLoggedIn() => Future.value(false);
 
   @override
   void addLoginStateCallback() {
@@ -46,23 +38,16 @@ class MockSnapchatLoginkitPlatform
   }
 
   @override
-  Future<UserDataResponse> fetchUserData(UserDataQuery query) {
-    // TODO: implement fetchUserData
-    throw UserDataResponse(code: 0, message: "");
-  }
+  Future<UserDataResponse> fetchUserData(UserDataQuery query) => throw UserDataResponse(code: 0, message: "");
 
   @override
-  Future<String?> fetchAccessToken() {
-    // TODO: implement fetchAccessToken
-    throw UnimplementedError();
-  }
+  Future<String?> fetchAccessToken() => throw UnimplementedError();
 
   @override
-  Future<bool> hasAccessToScope(String scope) {
-    // TODO: implement hasAccessToScope
-    throw UnimplementedError();
-  }
+  Future<bool> hasAccessToScope(String scope) => throw UnimplementedError();
 
+  @override
+  Future<String?> loginWithFirebase() => throw UnimplementedError();
 }
 
 void main() {

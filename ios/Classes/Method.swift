@@ -16,6 +16,7 @@ enum Method {
     static let fetchUserData = "fetchUserData"
     static let fetchAccessToken = "fetchAccessToken"
     static let hasAccessToScope = "hasAccessToScope"
+    static let loginWithFirebase = "loginWithFirebase"
 
     enum Callback {
         static let onStart = "onStart"

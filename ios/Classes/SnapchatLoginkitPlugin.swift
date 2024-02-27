@@ -46,6 +46,9 @@ public class SnapchatLoginkitPlugin: NSObject, FlutterPlugin {
         case Method.hasAccessToScope:
             hasAccessToScope(call.arguments as? String, result)
             
+        case Method.loginWithFirebase:
+            loginWithFirebase(result)
+            
         case "getPlatformVersion":
             result("iOS " + UIDevice.current.systemVersion)
             
@@ -132,5 +135,15 @@ extension SnapchatLoginkitPlugin {
     
     private func hasAccessToScope(_ scope: String?, _ result: @escaping FlutterResult) {
         result(SCSDKLoginClient.hasAccess(toScope: scope ?? ""))
+    }
+    
+    private func loginWithFirebase(_ result: @escaping FlutterResult) {
+        SCSDKLoginClient.startFirebaseAuth(from: nil) { token, error in
+            if let error = error {
+                debugPrint(error)
+            }
+            
+            result(token)
+        }
     }
 }
