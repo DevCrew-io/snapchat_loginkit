@@ -160,7 +160,7 @@ import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 ```
 
 ## Access Loginkit in Flutter
-### Initializing the Plugin
+### Initializing the Login
 ```dart
 class _MyAppState extends State<MyApp> implements LoginStateCallback {
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
@@ -208,7 +208,129 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
 ```dart
  _snapchatLoginkitPlugin.login();
 ```
+`When you call login, you will receive callbacks for onFailure, onLogout, onStart, and onSuccess.`
 
+### Subscribe / Unsubscribe to Login State Updates
+To subscribe to updates about the success of the login process, use `addLoginStateCallback()`. 
+To unsubscribe from login updates, use `removeLoginStateCallback()`.
+
+```dart
+class _MyAppState extends State<MyApp> implements LoginStateCallback {
+  late final SnapchatLoginkit _snapchatLoginkitPlugin;
+
+  @override
+  void initState() {
+    super.initState();
+    _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
+    _snapchatLoginkitPlugin.addLoginStateCallback();
+  }
+
+  @override
+  void dispose() {
+     _snapchatLoginkitPlugin.removeLoginStateCallback();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Snapchat loginkit example'),
+        ),
+        body: Container(),
+      ),
+    );
+  }
+
+  @override
+  void onFailure(String message) {
+    // TODO: implement onFailure
+  }
+
+  @override
+  void onLogout() {
+   // TODO: implement onLogout
+  }
+
+  @override
+  void onStart() {
+    // TODO: implement onStart
+  }
+
+  @override
+  void onSuccess(String accessToken) async {
+     // TODO: implement onSuccess
+  }
+}
+```
+
+### Send Requests to Get User Data
+
+Once a user logs into your app with Snapchat, you can make requests for their `displayName`, `AvatarUrl`, `AvatarId`, `externalId`, `tokenId` and `profileLink`.
+
+Construct the user data query
+```dart
+    UserDataQuery query = UserDataQueryBuilder()
+        .withDisplayName()
+        .withBitmojiAvatarId()
+        .withBitmojiAvatarUrl()
+        .withExternalId()
+        .withIdToken()
+        .withProfileLink()
+        .build();
+```
+
+Call the fetch API
+```dart
+UserResponse userResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
+debugPrint("User Code: ${userResponse.code}");
+debugPrint("User Message: ${userResponse.message}");
+debugPrint("User: ${userResponse.user}");
+final displayName = userResponse.user.displayName;
+final avatarUrl = userResponse.user.avatarUrl;
+final avatarId = userResponse.user.avatarId;
+final externalId = userResponse.user.externalId;
+final tokenId = userResponse.user.tokenId;
+final profileLink = userResponse.user.profileLink;
+```
+
+### Query Login State
+
+To check whether a user is currently logged in, use `isUserLoggedIn()`
+
+```dart
+bool isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
+```
+
+### Fetch Access Token
+Retrieve the access token after a successful login, use `fetchAccessToken()`
+```dart
+    final response = await _snapchatLoginkitPlugin.fetchAccessToken();
+    debugPrint("Token Code: ${response.code}");
+    debugPrint("Token Message: ${response.message}");
+    debugPrint("Token Token: ${response.token}");
+```
+
+### Access To Scope 
+Check if the user has granted access to a specific scope (permission) in their Snapchat account. use `hasAccessToScope('scope')`
+
+```dart
+ final bool hasAccess = await _snapchatLoginkitPlugin.hasAccessToScope('https://auth.snapchat.com/oauth2/api/user.display_name');
+```
+
+### Authenticate With Firebase 
+Users to authenticate with Firebase using their Snapchat accounts. Define the `com.snap.kit.firebaseExtCustomTokenUrl=firebaseExtCustomTokenUrl` value in `local.properties` file under  **:android** module.
+Before call this method `loginWithFirebase()` you should need to provide Firebase extension token url. for more help, how to generate firebase extension token url visit 
+[Firebase Extension Token Url Android](https://docs.snap.com/snap-kit/login-kit/Tutorials/firebase/android#get-started) , [Firebase Extension Token Url iOS](https://docs.snap.com/snap-kit/login-kit/Tutorials/firebase/ios)
+
+### Unlink
+A user can choose to end the current OAuth2 Snapchat session and stop sharing their Display Name and Bitmoji avatar with your app. 
+The `logout()` method can be used to clear the access.
+
+```dart
+ _snapchatLoginkitPlugin.logout();
+```
 
 ## Bugs and feature requests
 
