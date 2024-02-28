@@ -8,8 +8,9 @@ A Flutter plugin for integrating Snapchat login kit into your Flutter applicatio
 
 ## Features
 - **Snapchat login:** Enable users to log in to your app using their Snapchat credentials.
-- **User Information Retrieval**: After Successful login, Get the user information such as displayName, AvatarUrl, AvatarId, externalId, tokenId and profileLink.
-- **Check To User Logged In**: Check if the user is already logged in to Snapchat.
+- **Subscribe / Unsubscribe to Login State Updates:** Subscribe or Unsubscribe to updates about the success of the login process.
+- **Send Requests to Get User Data**: After Successful login, Get the user information such as displayName, AvatarUrl, AvatarId, externalId, tokenId and profileLink.
+- **Query Login State**: Check if the user is already logged in to Snapchat.
 - **Fetch Access Token**: Retrieve the access token after a successful login, which can be used to make API calls to Snapchat on behalf of the user.
 - **Access To Scope**: Check if the user has granted access to a specific scope (permission) in their Snapchat account.
 - **Login With Firebase**: Integrate Firebase authentication with Snapchat login, allowing users to log in to your app using Firebase authentication after logging in with Snapchat.
