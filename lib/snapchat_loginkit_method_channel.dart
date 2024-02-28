@@ -17,24 +17,19 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
       await methodChannel.invokeMethod<String>('getPlatformVersion');
 
   @override
-  void login() =>
-      methodChannel.invokeMethod<String>('login');
+  void login() => methodChannel.invokeMethod<String>('login');
 
   @override
-  void logout() =>
-      methodChannel.invokeMethod<String>('logout');
+  void logout() => methodChannel.invokeMethod<String>('logout');
 
   @override
-  Future<bool> isUserLoggedIn() async =>
-      await methodChannel.invokeMethod('isUserLoggedIn');
+  Future<bool> isUserLoggedIn() async => await methodChannel.invokeMethod('isUserLoggedIn');
 
   @override
-  void addLoginStateCallback() =>
-      methodChannel.invokeMethod<String>('addLoginStateCallback');
+  void addLoginStateCallback() => methodChannel.invokeMethod<String>('addLoginStateCallback');
 
   @override
-  void removeLoginStateCallback() =>
-      methodChannel.invokeMethod<String>('removeLoginStateCallback');
+  void removeLoginStateCallback() => methodChannel.invokeMethod<String>('removeLoginStateCallback');
 
   @override
   MethodChannel getMethodChannel() => methodChannel;

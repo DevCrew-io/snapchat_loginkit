@@ -1,7 +1,9 @@
 /// [login] method callbacks
 abstract class LoginResultCallback {
   void onStart();
+
   void onSuccess(String accessToken);
+
   void onFailure(String message);
 }
 
