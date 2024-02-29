@@ -1,3 +1,13 @@
+## 1.0.1
+
+* Update README.md
+* dart formatting issues
+
+## 1.0.0
+
+* Refactor code
+* Update README.md
+
 ## 0.0.1
 
 * Login with Snapchat from flutter
@@ -7,8 +17,3 @@
 * Access To Scope 
 * Authenticate With Firebase
 * Subscribe / Unsubscribe to Login State Updates
-
-## 1.0.0
-
-* Refactor code
-* Update README.md 
