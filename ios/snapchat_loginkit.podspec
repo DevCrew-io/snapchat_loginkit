@@ -11,7 +11,7 @@ Flutter plugin for integrating Snapchat LoginKit, providing a seamless authentic
                        DESC
   s.homepage         = 'http://example.com'
   s.license          = { :file => '../LICENSE' }
-  s.author           = { 'Your Company' => 'email@example.com' }
+  s.author           = { 'DevCrew I/O' => 'https://devcrew.io' }
   s.source           = { :path => '.' }
   s.source_files = 'Classes/**/*'
   s.dependency 'Flutter'
