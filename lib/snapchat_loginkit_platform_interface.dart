@@ -35,15 +35,17 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
 
   void login() => throw UnimplementedError('login() has not been implemented.');
 
-  Future<bool> isUserLoggedIn() => throw UnimplementedError('isUserLoggedIn() has not been implemented.');
+  Future<bool> isUserLoggedIn() =>
+      throw UnimplementedError('isUserLoggedIn() has not been implemented.');
 
-  void addLoginStateCallback() =>
-      throw UnimplementedError('addLoginStateCallback() has not been implemented.');
+  void addLoginStateCallback() => throw UnimplementedError(
+      'addLoginStateCallback() has not been implemented.');
 
-  void removeLoginStateCallback() =>
-      throw UnimplementedError('removeLoginStateCallback() has not been implemented.');
+  void removeLoginStateCallback() => throw UnimplementedError(
+      'removeLoginStateCallback() has not been implemented.');
 
-  void logout() => throw UnimplementedError('logout() has not been implemented.');
+  void logout() =>
+      throw UnimplementedError('logout() has not been implemented.');
 
   Future<UserResponse> fetchUserData(UserDataQuery query) =>
       throw UnimplementedError('fetchUserData() has not been implemented.');

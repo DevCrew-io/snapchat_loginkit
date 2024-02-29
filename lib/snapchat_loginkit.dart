@@ -15,7 +15,9 @@ class SnapchatLoginkit {
   final LoginStateCallback? loginStateCallback;
 
   SnapchatLoginkit({this.loginStateCallback}) {
-    SnapchatLoginkitPlatform.instance.getMethodChannel().setMethodCallHandler((call) async {
+    SnapchatLoginkitPlatform.instance
+        .getMethodChannel()
+        .setMethodCallHandler((call) async {
       switch (call.method) {
         case LoginCallbackMethod.onStart:
           loginStateCallback?.onStart();
@@ -35,17 +37,21 @@ class SnapchatLoginkit {
     });
   }
 
-  Future<String?> getPlatformVersion() => SnapchatLoginkitPlatform.instance.getPlatformVersion();
+  Future<String?> getPlatformVersion() =>
+      SnapchatLoginkitPlatform.instance.getPlatformVersion();
 
   void login() => SnapchatLoginkitPlatform.instance.login();
 
-  void addLoginStateCallback() => SnapchatLoginkitPlatform.instance.addLoginStateCallback();
+  void addLoginStateCallback() =>
+      SnapchatLoginkitPlatform.instance.addLoginStateCallback();
 
-  void removeLoginStateCallback() => SnapchatLoginkitPlatform.instance.removeLoginStateCallback();
+  void removeLoginStateCallback() =>
+      SnapchatLoginkitPlatform.instance.removeLoginStateCallback();
 
   void logout() => SnapchatLoginkitPlatform.instance.logout();
 
-  Future<bool> isUserLoggedIn() => SnapchatLoginkitPlatform.instance.isUserLoggedIn();
+  Future<bool> isUserLoggedIn() =>
+      SnapchatLoginkitPlatform.instance.isUserLoggedIn();
 
   Future<UserResponse> fetchUserData(UserDataQuery query) async =>
       await SnapchatLoginkitPlatform.instance.fetchUserData(query);

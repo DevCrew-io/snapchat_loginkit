@@ -20,30 +20,34 @@ class MethodChannelSnapchatLoginkit extends SnapchatLoginkitPlatform {
   void logout() => methodChannel.invokeMethod<String>('logout');
 
   @override
-  Future<bool> isUserLoggedIn() async => await methodChannel.invokeMethod('isUserLoggedIn');
+  Future<bool> isUserLoggedIn() async =>
+      await methodChannel.invokeMethod('isUserLoggedIn');
 
   @override
-  void addLoginStateCallback() => methodChannel.invokeMethod<String>('addLoginStateCallback');
+  void addLoginStateCallback() =>
+      methodChannel.invokeMethod<String>('addLoginStateCallback');
 
   @override
-  void removeLoginStateCallback() => methodChannel.invokeMethod<String>('removeLoginStateCallback');
+  void removeLoginStateCallback() =>
+      methodChannel.invokeMethod<String>('removeLoginStateCallback');
 
   @override
   MethodChannel getMethodChannel() => methodChannel;
 
   @override
   Future<UserResponse> fetchUserData(UserDataQuery query) async =>
-      UserResponse.fromMap(await methodChannel.invokeMethod('fetchUserData', query.toMap()));
+      UserResponse.fromMap(
+          await methodChannel.invokeMethod('fetchUserData', query.toMap()));
 
   @override
-  Future<TokenResponse> fetchAccessToken() async =>
-      TokenResponse.fromMap(await methodChannel.invokeMethod('fetchAccessToken'));
+  Future<TokenResponse> fetchAccessToken() async => TokenResponse.fromMap(
+      await methodChannel.invokeMethod('fetchAccessToken'));
 
   @override
   Future<bool> hasAccessToScope(String scope) async =>
       await methodChannel.invokeMethod('hasAccessToScope', scope);
 
   @override
-  Future<TokenResponse> loginWithFirebase() async =>
-      TokenResponse.fromMap(await methodChannel.invokeMethod('loginWithFirebase'));
+  Future<TokenResponse> loginWithFirebase() async => TokenResponse.fromMap(
+      await methodChannel.invokeMethod('loginWithFirebase'));
 }
