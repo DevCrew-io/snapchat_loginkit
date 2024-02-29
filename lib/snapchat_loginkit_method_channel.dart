@@ -1,9 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
-import 'package:snapchat_loginkit/src/token_response.dart';
-import 'package:snapchat_loginkit/src/user_response.dart';
-
 import 'snapchat_loginkit_platform_interface.dart';
 
 /// An implementation of [SnapchatLoginkitPlatform] that uses method channels.
