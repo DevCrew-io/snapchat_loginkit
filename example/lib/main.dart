@@ -98,11 +98,13 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
                   children: [
                     Text('Running on: $_platformVersion\n'),
                     Text('Snapchat Login: $_loginResult'),
-                    ElevatedButton(
-                      onPressed: () {
-                        _snapchatLoginkitPlugin.login();
-                      },
-                      child: const Text('Login with Snapchat'),
+                    Center(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          _snapchatLoginkitPlugin.login();
+                        },
+                        child: const Text('Login with Snapchat'),
+                      ),
                     ),
                     const SizedBox(height: 12),
                   ],
