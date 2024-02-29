@@ -4,7 +4,7 @@
 #
 Pod::Spec.new do |s|
   s.name             = 'snapchat_loginkit'
-  s.version          = '0.0.1'
+  s.version          = '1.0.0'
   s.summary          = 'Flutter plugin for integrating Snapchat LoginKit, providing a seamless authentication experience in Flutter apps.'
   s.description      = <<-DESC
 Flutter plugin for integrating Snapchat LoginKit, providing a seamless authentication experience in Flutter apps.
