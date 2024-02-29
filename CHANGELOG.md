@@ -8,3 +8,7 @@
 * Authenticate With Firebase
 * Subscribe / Unsubscribe to Login State Updates
 
+## 1.0.0
+
+* Refactor code
+* Update README.md 
