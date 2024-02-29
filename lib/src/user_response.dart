@@ -16,17 +16,16 @@ class User {
       externalId: map['externalId'] != null ? map['externalId'] as String : null,
       avatarId: map['avatarId'] != null ? map['avatarId'] as String : null,
       profileLink: map['profileLink'] != null ? map['profileLink'] as String : null,
-      tokenId: map['tokenId'] != null ? map['tokenId'] as String : null
-  );
+      tokenId: map['tokenId'] != null ? map['tokenId'] as String : null);
 }
 
 class UserResponse extends SnapchatResponse {
   User? user;
+
   UserResponse({super.code, super.message, this.user});
 
   factory UserResponse.fromMap(Map<Object?, Object?> map) => UserResponse(
-    code: map['code'] as int? ?? 0,
-    message: map['message'] as String? ?? "",
-    user: map['user'] != null ? User.fromMap(map['user'] as Map<Object?, Object?>) : null
-  );
+      code: map['code'] as int? ?? 0,
+      message: map['message'] as String? ?? "",
+      user: map['user'] != null ? User.fromMap(map['user'] as Map<Object?, Object?>) : null);
 }

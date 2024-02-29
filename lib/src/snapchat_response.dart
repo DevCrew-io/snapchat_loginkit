@@ -1,6 +1,3 @@
-
-
-
 abstract class SnapchatResponse {
   int code;
   String message;
