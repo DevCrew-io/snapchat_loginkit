@@ -15,7 +15,7 @@ A Flutter plugin for integrating Snapchat login kit into your Flutter applicatio
 - **Access To Scope**: Check if the user has granted access to a specific scope (permission) in their Snapchat account.
 - **Login With Firebase**: Integrate Firebase authentication with Snapchat login, allowing users to log in to your app using Firebase authentication after logging in with Snapchat.
 
-![Alt text](https://github.com/DevCrew-io/snapchat_loginkit/blob/main/assets/example.gif)
+![Alt text](https://github.com/DevCrew-io/snapchat_loginkit/assets/93918747/f981ec1c-1cf6-42be-9e9a-a780036e6aed)
 
 ## Getting Started
 First thing first, you must login to your developer account on [Snapchat Developers portal](https://developers.snap.com/) and get your **Client ID** for the app. For more information you can read the docs [Login Kit](https://docs.snap.com/snap-kit/login-kit/overview).
@@ -163,9 +163,10 @@ import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 ```
 
 ## Access Loginkit in Flutter
-### Initializing the Login
+### Initializing the SnapchatLoginkit
+
 ```dart
-class _MyAppState extends State<MyApp> implements LoginStateCallback {
+class _MyAppState extends State<MyApp>{
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
 
   @override
@@ -185,33 +186,59 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
       ),
     );
   }
-
-  @override
-  void onFailure(String message) {
-    // TODO: implement onFailure
-  }
-
-  @override
-  void onLogout() {
-   // TODO: implement onLogout
-  }
-
-  @override
-  void onStart() {
-    // TODO: implement onStart
-  }
-
-  @override
-  void onSuccess(String accessToken) async {
-     // TODO: implement onSuccess
-  }
 }
 ```
 ### Login with snapchat
+
+LoginStateCallback Provides methods to handle Snapchat login callbacks.
+
+Use [LoginStateCallback] methods to listen to login events such as success, failure, start, and logout.
+
 ```dart
- _snapchatLoginkitPlugin.login();
+class _MyAppState extends State<MyApp> implements LoginStateCallback {
+  late final SnapchatLoginkit _snapchatLoginkitPlugin;
+
+  @override
+  void initState() {
+    super.initState();
+    _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: Scaffold(
+        appBar: AppBar(
+          title: const Text('Snapchat loginkit example'),
+        ),
+        body: Center(child: ElevatedButton(
+                        onPressed: () {
+                          _snapchatLoginkitPlugin.login();
+                        },
+                        child: const Text('Login with Snapchat'),
+                      ),
+                   ),
+      ),
+    );
+  }
+
+ /// Callback method invoked when the login process fails.
+  @override
+  void onFailure(String message) {}
+
+  /// Callback method invoked when the user logs out.
+  @override
+  void onLogout() {}
+
+ /// Callback method invoked when the login process starts.
+  @override
+  void onStart() {}
+
+  /// Callback method invoked when the login process is successful.
+  @override
+  void onSuccess(String accessToken) async {}
+}
 ```
-`When you call login, you will receive callbacks for onFailure, onLogout, onStart, and onSuccess.`
 
 ### Subscribe / Unsubscribe to Login State Updates
 To subscribe to updates about the success of the login process, use `addLoginStateCallback()`. 
@@ -246,25 +273,21 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     );
   }
 
+ /// Callback method invoked when the login process fails.
   @override
-  void onFailure(String message) {
-    // TODO: implement onFailure
-  }
+  void onFailure(String message) {}
 
+  /// Callback method invoked when the user logs out.
   @override
-  void onLogout() {
-   // TODO: implement onLogout
-  }
+  void onLogout() {}
 
+ /// Callback method invoked when the login process starts.
   @override
-  void onStart() {
-    // TODO: implement onStart
-  }
+  void onStart() {}
 
+  /// Callback method invoked when the login process is successful.
   @override
-  void onSuccess(String accessToken) async {
-     // TODO: implement onSuccess
-  }
+  void onSuccess(String accessToken) async {}
 }
 ```
 
