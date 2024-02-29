@@ -15,7 +15,7 @@ A Flutter plugin for integrating Snapchat login kit into your Flutter applicatio
 - **Access To Scope**: Check if the user has granted access to a specific scope (permission) in their Snapchat account.
 - **Login With Firebase**: Integrate Firebase authentication with Snapchat login, allowing users to log in to your app using Firebase authentication after logging in with Snapchat.
 
-![Alt text](https://github.com/DevCrew-io/snapchat_loginkit/blob/documentation/assets/example.gif)
+![Alt text](https://github.com/DevCrew-io/snapchat_loginkit/blob/main/assets/example.gif)
 
 ## Getting Started
 First thing first, you must login to your developer account on [Snapchat Developers portal](https://developers.snap.com/) and get your **Client ID** for the app. For more information you can read the docs [Login Kit](https://docs.snap.com/snap-kit/login-kit/overview).
