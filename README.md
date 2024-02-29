@@ -20,15 +20,17 @@ A Flutter plugin for integrating Snapchat login kit into your Flutter applicatio
 ## Getting Started
 First thing first, you must login to your developer account on [Snapchat Developers portal](https://developers.snap.com/) and get your **Client ID** for the app. For more information you can read the docs [Login Kit](https://docs.snap.com/snap-kit/login-kit/overview).
 
-> The **Client ID** is different for `Production` and `Staging` environment. So be careful to use the correct values.
-> To use `Production` Client ID, your snapchat app should be approved and live on snapchat developer portal. [Read more](https://docs.snap.com/camera-kit/app-review/release-app) about submitting app for review.
-## Installation
-Before we can use the `snapchat_loginkit` plugin in our flutter app, it is necessary to perform platform-specific configuration setups first.
+#### CAUTION
+ The **Client ID** is different for **Production** and **Staging** environment. So be careful to use the correct values.
+ **Note:** To use **Production** Client ID, your snapchat app should be approved and live on snapchat developer portal. [Read more](https://docs.snap.com/camera-kit/app-review/release-app) about submitting app for review.
 
-### Understand Scopes
+## Configuration
+It is necessary to perform platform-specific configuration setups first.
+
+## Understand Scopes
 [Snapchat Scopes](https://docs.snap.com/snap-kit/login-kit/Tutorials/android#understand-scopes) let your application declare which Login Kit features it wants access to. If a scope is toggleable, the user can deny access to one scope while agreeing to grant access to others.
 
-### Android
+## Android
 In **:android** module, define `snap_connect_scopes` as an Android resource array in [`values/arrays.xml`](https://developer.android.com/guide/topics/resources/providing-resources#table1).
 
 Define the following values in `local.properties` file under  **:android** module.
@@ -91,7 +93,7 @@ android {
 ```
 **NOTE:** The same properties name should be used as defined in the `local.properties` file.
 
-### iOS
+## iOS
 Add the following fields in your application’s `Info.plist` file:
 ```xml
 <key>SCSDKClientId</key>
@@ -123,7 +125,7 @@ Add the following fields in your application’s `Info.plist` file:
 </array>
 ```
 Read [Snapchat iOS Documentation](https://docs.snap.com/snap-kit/login-kit/Tutorials/ios#get-started) for more information.
-#### Securing Your Client ID in Xcode
+#### **Securing Your Client ID in Xcode**
 Adding a [Build Configuration](https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project) file to your project for storing your client id and confidential keys. Let's add `SNAP_CLIENT_ID`, `SNAP_REDIRECT_URL` and `SNAP_REDIRECT_SCHEME` properties in configuration file.
 ```properties
 // Configuration settings file format documentation can be found at:
@@ -138,7 +140,7 @@ SNAP_REDIRECT_SCHEME = YOUR_REDIRECT_SCHEME
 
 **NOTE:** Now, whenever we push code to our repo, we can make sure that config file does not reach the server by adding it in .gitignore
 
-#### Handle Deeplink
+## Handle Deeplink
 In `AppDelegate`, use the `SCSDKLoginClient` interface to receive the deeplink:
 ```swift
 import SCSDKLoginKit
@@ -154,7 +156,9 @@ func application(
   ...
 }
 ```
-After the keys setup, add `snapchat_loginkit:` as a dependency in your pubspec.yaml file.
+
+## Installation
+After the perform platform-specific configuration setups, add `snapchat_loginkit:` as a dependency in your pubspec.yaml file.
 Then run ```flutter pub get``` to install the package.
 
 Now in your Dart code, you can use:
@@ -162,8 +166,7 @@ Now in your Dart code, you can use:
 import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 ```
 
-## Access Loginkit in Flutter
-### Initializing the SnapchatLoginkit
+## Initializing the SnapchatLoginkit
 
 ```dart
 class _MyAppState extends State<MyApp>{
@@ -188,7 +191,7 @@ class _MyAppState extends State<MyApp>{
   }
 }
 ```
-### Login with snapchat
+## Login with snapchat
 
 LoginStateCallback Provides methods to handle Snapchat login callbacks.
 
@@ -240,7 +243,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
 }
 ```
 
-### Subscribe / Unsubscribe to Login State Updates
+## Subscribe / Unsubscribe to Login State Updates
 To subscribe to updates about the success of the login process, use `addLoginStateCallback()`. 
 To unsubscribe from login updates, use `removeLoginStateCallback()`.
 
@@ -291,7 +294,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
 }
 ```
 
-### Send Requests to Get User Data
+## Send Requests to Get User Data
 
 Once a user logs into your app with Snapchat, you can make requests for their `displayName`, `AvatarUrl`, `AvatarId`, `externalId`, `tokenId` and `profileLink`.
 
@@ -321,7 +324,7 @@ final tokenId = userResponse.user.tokenId;
 final profileLink = userResponse.user.profileLink;
 ```
 
-### Query Login State
+## Query Login State
 
 To check whether a user is currently logged in, use `isUserLoggedIn()`
 
@@ -329,7 +332,7 @@ To check whether a user is currently logged in, use `isUserLoggedIn()`
 bool isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
 ```
 
-### Fetch Access Token
+## Fetch Access Token
 Retrieve the access token after a successful login, use `fetchAccessToken()`
 ```dart
     final response = await _snapchatLoginkitPlugin.fetchAccessToken();
@@ -338,19 +341,19 @@ Retrieve the access token after a successful login, use `fetchAccessToken()`
     debugPrint("Token Token: ${response.token}");
 ```
 
-### Access To Scope 
+## Access To Scope 
 Check if the user has granted access to a specific scope (permission) in their Snapchat account. use `hasAccessToScope('scope')`
 
 ```dart
  final bool hasAccess = await _snapchatLoginkitPlugin.hasAccessToScope('https://auth.snapchat.com/oauth2/api/user.display_name');
 ```
 
-### Authenticate With Firebase 
+## Authenticate With Firebase 
 Users to authenticate with Firebase using their Snapchat accounts. Define the `com.snap.kit.firebaseExtCustomTokenUrl=firebaseExtCustomTokenUrl` value in `local.properties` file under  **:android** module.
 Before call this method `loginWithFirebase()` you should need to provide Firebase extension token url. for more help, how to generate firebase extension token url visit 
 [Firebase Extension Token Url Android](https://docs.snap.com/snap-kit/login-kit/Tutorials/firebase/android#get-started) , [Firebase Extension Token Url iOS](https://docs.snap.com/snap-kit/login-kit/Tutorials/firebase/ios)
 
-### Unlink
+## Unlink
 A user can choose to end the current OAuth2 Snapchat session and stop sharing their Display Name and Bitmoji avatar with your app. 
 The `logout()` method can be used to clear the access.
 
