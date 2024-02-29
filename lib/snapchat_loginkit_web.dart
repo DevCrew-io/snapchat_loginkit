@@ -3,9 +3,7 @@
 // package as the core of your plugin.
 // ignore: avoid_web_libraries_in_flutter
 import 'dart:html' as html show window;
-
 import 'package:flutter_web_plugins/flutter_web_plugins.dart';
-
 import 'snapchat_loginkit_platform_interface.dart';
 
 /// A web implementation of the SnapchatLoginkitPlatform of the SnapchatLoginkit plugin.

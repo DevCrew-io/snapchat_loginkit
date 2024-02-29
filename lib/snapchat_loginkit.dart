@@ -1,13 +1,10 @@
 import 'package:snapchat_loginkit/src/token_response.dart';
 import 'package:snapchat_loginkit/src/user_response.dart';
 import 'snapchat_loginkit_platform_interface.dart';
-
 import 'src/snap_callbacks.dart';
 export 'src/snap_callbacks.dart';
-
 import 'src/user_data_query_builder.dart';
 export 'src/user_data_query_builder.dart';
-
 export 'src/user_response.dart';
 export 'src/token_response.dart';
 

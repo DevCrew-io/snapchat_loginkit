@@ -3,7 +3,6 @@ import 'package:plugin_platform_interface/plugin_platform_interface.dart';
 import 'package:snapchat_loginkit/src/token_response.dart';
 import 'package:snapchat_loginkit/src/user_data_query_builder.dart';
 import 'package:snapchat_loginkit/src/user_response.dart';
-
 import 'snapchat_loginkit_method_channel.dart';
 
 abstract class SnapchatLoginkitPlatform extends PlatformInterface {
