@@ -1,5 +1,6 @@
 import 'package:snapchat_loginkit/src/snapchat_response.dart';
 
+/// User model with all properties
 class User {
   final String? displayName;
   final String? avatarUrl;
@@ -16,6 +17,7 @@ class User {
       this.avatarId,
       this.profileLink});
 
+  /// Factory method
   factory User.fromMap(Map<Object?, Object?> map) => User(
       displayName:
           map['displayName'] != null ? map['displayName'] as String : null,
@@ -27,6 +29,8 @@ class User {
           map['profileLink'] != null ? map['profileLink'] as String : null,
       tokenId: map['tokenId'] != null ? map['tokenId'] as String : null);
 }
+
+/// User Response generic model
 
 class UserResponse extends SnapchatResponse {
   User? user;

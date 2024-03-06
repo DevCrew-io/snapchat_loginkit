@@ -1,3 +1,4 @@
+/// Generic response abstract class
 abstract class SnapchatResponse {
   int code;
   String message;

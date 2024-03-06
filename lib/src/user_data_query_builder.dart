@@ -1,3 +1,4 @@
+/// User Data Query model
 class UserDataQuery {
   final bool isWithDisplayName;
   final bool isWithExternalId;
@@ -25,6 +26,7 @@ class UserDataQuery {
       };
 }
 
+/// User Data Query Builder model class
 class UserDataQueryBuilder {
   bool _withDisplayName = false;
   bool _withExternalId = false;

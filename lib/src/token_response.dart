@@ -1,5 +1,6 @@
 import 'package:snapchat_loginkit/src/snapchat_response.dart';
 
+/// Token response model
 class TokenResponse extends SnapchatResponse {
   String? token;
 

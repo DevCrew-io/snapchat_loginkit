@@ -26,35 +26,46 @@ abstract class SnapchatLoginkitPlatform extends PlatformInterface {
     _instance = instance;
   }
 
+  /// Get instance of method channel class
   MethodChannel getMethodChannel() =>
       throw UnimplementedError('getMethodChannel() has not been implemented.');
 
+  /// Method to get current running platform version
   Future<String?> getPlatformVersion() =>
       throw UnimplementedError('platformVersion() has not been implemented.');
 
+  /// Start login
   void login() => throw UnimplementedError('login() has not been implemented.');
 
+  /// Query user’s logged-in state
   Future<bool> isUserLoggedIn() =>
       throw UnimplementedError('isUserLoggedIn() has not been implemented.');
 
+  /// Subscribe for login updates
   void addLoginStateCallback() => throw UnimplementedError(
       'addLoginStateCallback() has not been implemented.');
 
+  /// Unsubscribe from login updates
   void removeLoginStateCallback() => throw UnimplementedError(
       'removeLoginStateCallback() has not been implemented.');
 
+  /// Clear the access and refresh token locally
   void logout() =>
       throw UnimplementedError('logout() has not been implemented.');
 
+  /// Asynchronously Call the fetch API and get the User data
   Future<UserResponse> fetchUserData(UserDataQuery query) =>
       throw UnimplementedError('fetchUserData() has not been implemented.');
 
+  /// Fetch access token after successfully logged in
   Future<TokenResponse> fetchAccessToken() =>
       throw UnimplementedError('fetchAccessToken() has not been implemented.');
 
+  /// To check whether a specific scope has access or not
   Future<bool> hasAccessToScope(String scope) =>
       throw UnimplementedError('hasAccessToScope() has not been implemented.');
 
+  /// Asynchronously, get access token via login with firebase
   Future<TokenResponse> loginWithFirebase() =>
       throw UnimplementedError('loginWithFirebase() has not been implemented.');
 }
