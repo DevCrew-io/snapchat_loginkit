@@ -1,6 +1,6 @@
 name: snapchat_loginkit
 description: "Flutter plugin for integrating Snapchat LoginKit, providing a seamless authentication experience for Flutter apps."
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/DevCrew-io/snapchat_loginkit#readme
 repository: https://github.com/DevCrew-io/snapchat_loginkit
 issue_tracker: https://github.com/DevCrew-io/snapchat_loginkit/issues

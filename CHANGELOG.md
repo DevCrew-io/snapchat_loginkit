@@ -1,3 +1,7 @@
+## 1.0.3
+
+* Update Library documentation
+
 ## 1.0.2
 
 * Update README.md
