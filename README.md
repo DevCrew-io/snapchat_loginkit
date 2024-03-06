@@ -41,8 +41,10 @@ Define the following values in `local.properties` file under  **:android** modul
 # staging env for snapkit
 # Your app’s client id
 com.snap.kit.clientId=YOUR_APP_CLIENT_ID
+
 # The url that will handle login completion
 com.snap.kit.redirectUrl=REDIRECT_URL
+
 # Enter the parts of your redirect url below
 # e.g., if your redirect url is myapp://snap-kit/oauth2
 # android:scheme="myapp"
@@ -51,6 +53,7 @@ com.snap.kit.redirectUrl=REDIRECT_URL
 com.snap.kit.scheme=SCHEME
 com.snap.kit.host=HOST
 com.snap.kit.path=PATH
+
 # Set the firebase custom token url
 com.snap.kit.firebaseExtCustomTokenUrl=FIREBASE_CUSTOM_TOKEN_URL
 ```
@@ -147,8 +150,10 @@ Adding a [Build Configuration](https://developer.apple.com/documentation/xcode/a
 /// Snapchat Settings
 /// your app’s client id
 SNAP_CLIENT_ID = YOUR_CLIENT_ID
+
 /// the url that will handle login completion
 SNAP_REDIRECT_URL = YOUR_REDIRECT_URL
+
 /// This should contain your redirect URL’s scheme
 SNAP_REDIRECT_SCHEME = YOUR_REDIRECT_SCHEME
 ```
@@ -335,24 +340,24 @@ Once a user logs into your app with Snapchat, you can make requests for their `d
 
 Construct the user data query
 ```dart
-    UserDataQuery query = UserDataQueryBuilder()
-         /// optional: for 'displayName' resource
-        .withDisplayName()
-        /// optional: for ‘bitmoji’ resource
-        .withBitmojiAvatarId()
-        .withBitmojiAvatarUrl()
-        /// optional: for 'externalID' resource
-        .withExternalId()
-        /// optional: for Snap OIDC (OpenID Connect) token
-        /// Snap OIDC (OpenID Connect) provides a generic authentication and identity solution
-        /// that allows otherwise different systems to interoperate and share authentication state
-        /// and user profile information.
-        /// Typically, this allows 3rd party backend services to accept and authenticate requests
-        /// from Snap clients.
-        .withIdToken()
-        /// optional: for 'profileLink' resource
-        .withProfileLink()
-        .build();
+UserDataQuery query = UserDataQueryBuilder()
+/// optional: for 'displayName' resource
+.withDisplayName()
+/// optional: for ‘bitmoji’ resource
+.withBitmojiAvatarId()
+.withBitmojiAvatarUrl()
+/// optional: for 'externalID' resource
+.withExternalId()
+/// optional: for Snap OIDC (OpenID Connect) token
+/// Snap OIDC (OpenID Connect) provides a generic authentication and identity solution
+/// that allows otherwise different systems to interoperate and share authentication state
+/// and user profile information.
+/// Typically, this allows 3rd party backend services to accept and authenticate requests
+/// from Snap clients.
+.withIdToken()
+/// optional: for 'profileLink' resource
+.withProfileLink()
+.build();
 ```
 
 Call the fetch API
@@ -360,20 +365,28 @@ Call the fetch API
 UserResponse userResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
 /// handle the response code
 debugPrint("User Code: ${userResponse.code}");
+
 /// handle the response message
 debugPrint("User Message: ${userResponse.message}");
+
 /// handle the response user
 debugPrint("User: ${userResponse.user}");
+
 /// get user display name
 final displayName = userResponse.user.displayName;
+
 /// get user avatar url
-final avatarUrl = userResponse.user.avatarUrl;
+final avatarUrl = userResponse.user.avatarUrl;'
+
 /// get user avatar id
 final avatarId = userResponse.user.avatarId;
+
 /// get user external id
 final externalId = userResponse.user.externalId;
+
 /// get user token id
 final tokenId = userResponse.user.tokenId;
+
 /// get user profile link
 final profileLink = userResponse.user.profileLink;
 ```
@@ -391,10 +404,13 @@ To check whether a user is currently logged in, use `isUserLoggedIn()`
 Retrieve the access token after a successful login, use `fetchAccessToken()`
 ```dart
     final response = await _snapchatLoginkitPlugin.fetchAccessToken();
+
     /// handle response code
     debugPrint("Token Code: ${response.code}");
+
     /// handle response meesage
     debugPrint("Token Message: ${response.message}");
+
     /// get access token
     debugPrint("Token Token: ${response.token}");
 ```
