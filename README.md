@@ -38,8 +38,21 @@ Define the following values in `local.properties` file under  **:android** modul
 ```properties
 #sdk.dir=PATH_TO_ANDROID_SDK  
 
-# staging env for snapkit  
+# staging env for snapkit
+# Your app’s client id
 com.snap.kit.clientId=YOUR_APP_CLIENT_ID
+# The url that will handle login completion
+com.snap.kit.redirectUrl=REDIRECT_URL
+# Enter the parts of your redirect url below
+# e.g., if your redirect url is myapp://snap-kit/oauth2
+# android:scheme="myapp"
+# android:host="snap-kit"
+# android:path="oauth2"
+com.snap.kit.scheme=SCHEME
+com.snap.kit.host=HOST
+com.snap.kit.path=PATH
+# Set the firebase custom token url
+com.snap.kit.firebaseExtCustomTokenUrl=FIREBASE_CUSTOM_TOKEN_URL
 ```
 Inside the app's `build.gradle` use [manifestPlaceholders](https://developer.android.com/build/manage-manifests#inject_build_variables_into_the_manifest) attribute to pass these values to login kit. Read more about [configuring build types](https://developer.android.com/build/build-variants#build-types) in android.
 - Depending on your requirements, you can either setup only one configuration for  all `productFlavors`
@@ -128,12 +141,15 @@ Read [Snapchat iOS Documentation](https://docs.snap.com/snap-kit/login-kit/Tutor
 #### **Securing Your Client ID in Xcode**
 Adding a [Build Configuration](https://developer.apple.com/documentation/xcode/adding-a-build-configuration-file-to-your-project) file to your project for storing your client id and confidential keys. Let's add `SNAP_CLIENT_ID`, `SNAP_REDIRECT_URL` and `SNAP_REDIRECT_SCHEME` properties in configuration file.
 ```properties
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
+/// Configuration settings file format documentation can be found at:
+/// https://help.apple.com/xcode/#/dev745c5c974
 
-// Snapchat Settings
+/// Snapchat Settings
+/// your app’s client id
 SNAP_CLIENT_ID = YOUR_CLIENT_ID
+/// the url that will handle login completion
 SNAP_REDIRECT_URL = YOUR_REDIRECT_URL
+/// This should contain your redirect URL’s scheme
 SNAP_REDIRECT_SCHEME = YOUR_REDIRECT_SCHEME
 ```
 - **OR** better way, setup different configurations file for different `productFlavors`
@@ -170,11 +186,15 @@ import 'package:snapchat_loginkit/snapchat_loginkit.dart';
 
 ```dart
 class _MyAppState extends State<MyApp>{
+
+  /// Declaring a SnapchatLoginkit variable
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
 
   @override
   void initState() {
     super.initState();
+
+    /// Initializing the _snapchatLoginkitPlugin variable
     _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
   }
 
@@ -193,17 +213,23 @@ class _MyAppState extends State<MyApp>{
 ```
 ## Login with snapchat
 
+To login, use `login()`. 
+
 LoginStateCallback Provides methods to handle Snapchat login callbacks.
 
 Use [LoginStateCallback] methods to listen to login events such as success, failure, start, and logout.
 
 ```dart
 class _MyAppState extends State<MyApp> implements LoginStateCallback {
+
+  /// Declaring a SnapchatLoginkit variable
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
 
   @override
   void initState() {
     super.initState();
+
+    /// Initializing the _snapchatLoginkitPlugin variable
     _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
   }
 
@@ -216,6 +242,8 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
         ),
         body: Center(child: ElevatedButton(
                         onPressed: () {
+                          /// call login event
+                          /// LoginStateCallback Provides methods to handle Snapchat login callbacks.
                           _snapchatLoginkitPlugin.login();
                         },
                         child: const Text('Login with Snapchat'),
@@ -225,7 +253,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     );
   }
 
- /// Callback method invoked when the login process fails.
+  /// Callback method invoked when the login process fails.
   @override
   void onFailure(String message) {}
 
@@ -233,7 +261,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   @override
   void onLogout() {}
 
- /// Callback method invoked when the login process starts.
+  /// Callback method invoked when the login process starts.
   @override
   void onStart() {}
 
@@ -249,17 +277,24 @@ To unsubscribe from login updates, use `removeLoginStateCallback()`.
 
 ```dart
 class _MyAppState extends State<MyApp> implements LoginStateCallback {
+
+  /// Declaring a SnapchatLoginkit variable
   late final SnapchatLoginkit _snapchatLoginkitPlugin;
 
   @override
   void initState() {
     super.initState();
+
+    /// Initializing the _snapchatLoginkitPlugin variable
     _snapchatLoginkitPlugin = SnapchatLoginkit(loginStateCallback: this);
+
+    /// Subscribe for login updates
     _snapchatLoginkitPlugin.addLoginStateCallback();
   }
 
   @override
   void dispose() {
+    /// Unsubscribe from login updates
      _snapchatLoginkitPlugin.removeLoginStateCallback();
     super.dispose();
   }
@@ -301,11 +336,21 @@ Once a user logs into your app with Snapchat, you can make requests for their `d
 Construct the user data query
 ```dart
     UserDataQuery query = UserDataQueryBuilder()
+         /// optional: for 'displayName' resource
         .withDisplayName()
+        /// optional: for ‘bitmoji’ resource
         .withBitmojiAvatarId()
         .withBitmojiAvatarUrl()
+        /// optional: for 'externalID' resource
         .withExternalId()
+        /// optional: for Snap OIDC (OpenID Connect) token
+        /// Snap OIDC (OpenID Connect) provides a generic authentication and identity solution
+        /// that allows otherwise different systems to interoperate and share authentication state
+        /// and user profile information.
+        /// Typically, this allows 3rd party backend services to accept and authenticate requests
+        /// from Snap clients.
         .withIdToken()
+        /// optional: for 'profileLink' resource
         .withProfileLink()
         .build();
 ```
@@ -313,14 +358,23 @@ Construct the user data query
 Call the fetch API
 ```dart
 UserResponse userResponse = await _snapchatLoginkitPlugin.fetchUserData(query);
+/// handle the response code
 debugPrint("User Code: ${userResponse.code}");
+/// handle the response message
 debugPrint("User Message: ${userResponse.message}");
+/// handle the response user
 debugPrint("User: ${userResponse.user}");
+/// get user display name
 final displayName = userResponse.user.displayName;
+/// get user avatar url
 final avatarUrl = userResponse.user.avatarUrl;
+/// get user avatar id
 final avatarId = userResponse.user.avatarId;
+/// get user external id
 final externalId = userResponse.user.externalId;
+/// get user token id
 final tokenId = userResponse.user.tokenId;
+/// get user profile link
 final profileLink = userResponse.user.profileLink;
 ```
 
@@ -329,15 +383,19 @@ final profileLink = userResponse.user.profileLink;
 To check whether a user is currently logged in, use `isUserLoggedIn()`
 
 ```dart
-bool isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
+ /// Query user’s logged-in state
+ bool isUserLoggedIn = await _snapchatLoginkitPlugin.isUserLoggedIn();
 ```
 
 ## Fetch Access Token
 Retrieve the access token after a successful login, use `fetchAccessToken()`
 ```dart
     final response = await _snapchatLoginkitPlugin.fetchAccessToken();
+    /// handle response code
     debugPrint("Token Code: ${response.code}");
+    /// handle response meesage
     debugPrint("Token Message: ${response.message}");
+    /// get access token
     debugPrint("Token Token: ${response.token}");
 ```
 
@@ -345,6 +403,9 @@ Retrieve the access token after a successful login, use `fetchAccessToken()`
 Check if the user has granted access to a specific scope (permission) in their Snapchat account. use `hasAccessToScope('scope')`
 
 ```dart
+ /// Login Kit offers the following scopes: 
+ /// https://auth.snapchat.com/oauth2/api/user.bitmoji.avatar
+ /// https://auth.snapchat.com/oauth2/api/user.display_name
  final bool hasAccess = await _snapchatLoginkitPlugin.hasAccessToScope('https://auth.snapchat.com/oauth2/api/user.display_name');
 ```
 
@@ -358,6 +419,7 @@ A user can choose to end the current OAuth2 Snapchat session and stop sharing th
 The `logout()` method can be used to clear the access.
 
 ```dart
+ /// Clear the access and refresh token locally
  _snapchatLoginkitPlugin.logout();
 ```
 
