@@ -316,7 +316,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
     );
   }
 
- /// Callback method invoked when the login process fails.
+  /// Callback method invoked when the login process fails.
   @override
   void onFailure(String message) {}
 
@@ -324,7 +324,7 @@ class _MyAppState extends State<MyApp> implements LoginStateCallback {
   @override
   void onLogout() {}
 
- /// Callback method invoked when the login process starts.
+  /// Callback method invoked when the login process starts.
   @override
   void onStart() {}
 
@@ -376,7 +376,7 @@ debugPrint("User: ${userResponse.user}");
 final displayName = userResponse.user.displayName;
 
 /// get user avatar url
-final avatarUrl = userResponse.user.avatarUrl;'
+final avatarUrl = userResponse.user.avatarUrl;
 
 /// get user avatar id
 final avatarId = userResponse.user.avatarId;
